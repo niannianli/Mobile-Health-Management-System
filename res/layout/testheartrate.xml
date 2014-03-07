@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+       
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <FrameLayout
+          
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0" 
+                android:visibility="gone"/>
+
+            <LinearLayout
+               
+                android:id="@+id/heartrate_start_tab"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="about heart rate"
+                    android:textSize="10pt" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="Heart rate is the number of heartbeats per unit of time, 
+                    \ntypically expressed as beats per minute (bpm).
+        \nnormal adult is 60～100 per minute；
+        \nless than 60 per minute means slow；
+        \nover 100 per min，means fast。"
+                    android:textSize="6pt" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="关于测试"
+                    android:textSize="10pt" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:text="1，Each heartbeat will cause the increase of the oxygen content of the blood, 
+                    \nafter the body consumed will reduce the oxygen content of the blood, 
+                    \nthe blood oxygen content as the color changes can generate a periodic change;
+        \n2，By recording the finger through the change of color of the light to record the heart rate;
+        \n3，When used must have adequate light, 
+        \npreferably after a finger on the camera head toward the sun, or the light,
+        \n with the flash can also open the flash measurement;
+        \n4，Gently put the index finger on the camera head 10 seconds, the heart rate can be measured out;
+        \n5，Please wait, the system will automatically pop up the heart rate test results."
+                    android:textSize="6pt" />
+
+                <Button
+                    android:id="@+id/startHeartRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="begin testing" />
+            </LinearLayout>
+
+            <LinearLayout
+               
+                android:id="@+id/testheartrate_tab"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                   
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/helpInformation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Keep the index finger is placed at the camera more than 10 seconds!"
+                        android:textSize="15dp" />
+
+                    <Button
+                        android:id="@+id/backHeartRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="return" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/top"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" >
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal" >
+
+                        <mhms.healthtestingtools.HeartbeatView
+                            android:id="@+id/image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_weight="7" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <SurfaceView
+                    android:id="@+id/preview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+</TabHost>

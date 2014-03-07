@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, ActivityGroupDemo!</string>
+    <string name="app_name">Mobile Health Management System</string>
+    <string name="app_title">Mobile Health Management System</string>
+    <string name="actionbar_activity_not_found">Failed to open a new intent</string>
+</resources>

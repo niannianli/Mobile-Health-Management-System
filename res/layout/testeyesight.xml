@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+       
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+          <FrameLayout
+           
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0" >
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0" 
+            android:visibility="gone"/>
+        
+        <LinearLayout
+          
+            android:id="@+id/eyesight_start_tab"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="about eyesight testing"
+                android:textSize="10pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="Can be measured from 3.0 to 5.2 (decimal system of 0.01 to 1.5) near vision
+           \nCan take advantage of natural light, 
+           \nthe light should be sufficient,  
+           \nshould avoid direct sunlight phone screen
+          \nThis test is for reference only, for accurate data, perform medical testing"
+                android:textSize="5pt" />
+
+            <TextView
+                android:id="@+id/helpInformation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="user instruction"
+                android:textSize="10pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:text="1，Mobile phone screen with eyes flat
+        \n2，Mobile phone screen with binocular distance 25cm
+        \n3,This test is for reference only, for accurate data, perform medical testing
+        \n4,Block one eye, the other eye examination
+        \n5,Displayed on the screen according to the opening direction of E: 
+        \nSelection screen in different directions, 
+        \n(touch screen in different directions); 
+        \nif not see, click on the image (touching picture center)
+        \n6,The system automatically determines whether the end of the test,
+        \n after the return to check the results."
+                android:textSize="5pt" />
+
+            <Button
+                android:id="@+id/startEyesight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="begin test" />
+        </LinearLayout>
+
+        <LinearLayout
+           
+            android:id="@+id/testeyesight_tab"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="please choose E's direction：" />
+
+            <Button
+                android:id="@+id/up"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="up"
+                android:textColor="#000000" />
+
+            <LinearLayout
+               
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/left"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="left"
+                    android:textColor="#000000" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="center" />
+
+                <Button
+                    android:id="@+id/right"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="right"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/down"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="down"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/backEyesight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="back to instruction" />
+        </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+</TabHost>
