@@ -43,17 +43,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
+		
 		//db = this.getReadableDatabase();
-	    db.execSQL("create table bmitable(id integer primary key autoincrement,systemtime varchar(20),bodyheight float,bodyweight float,bmi float)");
-	    db.execSQL("create table heartratetable(id integer primary key autoincrement,systemtime varchar(20),heartrate integer)");
-	    db.execSQL("create table eyesighttable(id integer primary key autoincrement,systemtime varchar(20),eyesight double)");
-		db.execSQL("create table healthreport(id integer primary key autoincrement,systemtime varchar(20)," +
+	    db.execSQL("create table bmitable(id integer primary key autoincrement,"+ 
+	    "systemtime varchar(20),bodyheight float,bodyweight float,bmi float)");
+	   
+	    db.execSQL("create table heartratetable(id integer primary key autoincrement,"+ 
+	    "systemtime varchar(20),heartrate integer)");
+	    
+	    db.execSQL("create table eyesighttable(id integer primary key autoincrement,systemtime varchar(20),"+ 
+	    "eyesight double)");
+	    
+	    db.execSQL("create table healthreport(id integer primary key autoincrement,systemtime varchar(20)," +
 				"bodyheight float,bodyweight float,eyesight float,heartrate integer," +
-				"bloodpressure float,bloodsugar float,bloodlipid float," +
+				"bloodpressure float,bloodsugar float,bloodlipid float," + 
 				"surgery varchar(20),internal varchar(20),bloodroutine varchar(20))");
-		db.execSQL("create table medicinerecord(id integer primary key autoincrement,systemtime varchar(20)," +
-				"ill_name varchar(20),ill_begin varchar(20),ill_end varchar(20),pill_using varchar(100),ill_describe varchar(100))");
-		db.execSQL("create table mhmslog(id integer primary key autoincrement,systemtime varchar(20),logtype integer,log varchar(100))");
+	    
+	    db.execSQL("create table medicinerecord(id integer primary key autoincrement,systemtime varchar(20)," +
+				"ill_name varchar(20),ill_begin varchar(20),ill_end varchar(20),"
+			+ "pill_using varchar(100),ill_describe varchar(100))");
+	    
+	    db.execSQL("create table mhmslog(id integer primary key autoincrement,"
+	    + "systemtime varchar(20),logtype integer,log varchar(100))");
 
 	}
 
@@ -61,7 +72,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 	
-
 	}
 
 }
