@@ -40,10 +40,10 @@ public class HealthTestingTools extends ActivityGroup {
 	private ActionBar actionBar;
 	private GridView gvBar;
 	private ImageAdapter ImgAdapter;
-	public LinearLayout container;//container for sub Activity
+	public LinearLayout container;// container for sub Activity
 	private View dialogview;
 
-	//top button image
+	// top button image
 	int[] bar_image_array = { R.drawable.bar_btn, R.drawable.bar_btn,
 			R.drawable.bar_btn};
 
@@ -54,11 +54,11 @@ public class HealthTestingTools extends ActivityGroup {
 
 		actionBar = (ActionBar) findViewById(R.id.actionbar);// add actionbar
 	
-		//add actionbar to home page
+		// add actionbar to home page
 		actionBar.setHomeAction(new IntentAction(this, backToMainIntent(this),
 				R.drawable.ic_title_home_default));
 		
-		//add actionbar help dialog
+		// add actionbar help dialog
 		actionBar.addAction(new DialogAction(createDialog(),
 				R.drawable.help_button));
 
@@ -92,8 +92,8 @@ public class HealthTestingTools extends ActivityGroup {
 	 *           id of  GridView chosen
 	 */
 	public void SwitchActivity(int id) {
-		ImgAdapter.SetFocus(id);// item chosen highlight
-		container.removeAllViews();// remove all view in container
+		ImgAdapter.SetFocus(id); // item chosen highlight
+		container.removeAllViews(); // remove all view in container
 		Intent intent = null;
 		if (id == 0) {
 			ID = 0;
@@ -110,9 +110,11 @@ public class HealthTestingTools extends ActivityGroup {
 		} 
 
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		
 		// Activity to View
 		Window subActivity = getLocalActivityManager().startActivity(
 				"subActivity", intent);
+		
 		// add View to container
 		container.addView(subActivity.getDecorView(), LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT);
@@ -125,8 +127,7 @@ public class HealthTestingTools extends ActivityGroup {
 		return intent;
 	}
 
-
-	//ActionBar to get dialog
+	// ActionBar to get dialog
 	private Builder createDialog() {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -136,6 +137,7 @@ public class HealthTestingTools extends ActivityGroup {
 		builder.setTitle("help");
 		builder.setView(dialogview);
 		builder.setPositiveButton("submit", new OnClickListener() {
+			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -166,6 +168,7 @@ public class HealthTestingTools extends ActivityGroup {
 			returnbuilder.setMessage("quit?");
 			returnbuilder.setTitle("hint");
 			returnbuilder.setPositiveButton("submit", new OnClickListener() {
+			
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -173,6 +176,7 @@ public class HealthTestingTools extends ActivityGroup {
 				}
 			});
 			returnbuilder.setNegativeButton("cancel", new OnClickListener() {
+				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -193,6 +197,7 @@ public class HealthTestingTools extends ActivityGroup {
 	}
 
 	@Override
+	
 	/**
 	 * prevent MENU
 	 */
