@@ -39,14 +39,12 @@ public class TestEyesight extends TabActivity {
 	private Button okeyesight;
 	private double eyesight_db;
 
-	//store images in array
+	// store images in array
 	private static int[] imgs0 = new int[] { R.drawable.up0, R.drawable.down0,
 			R.drawable.left0, R.drawable.right0, };
 	private static int[] imgs1 = new int[] { R.drawable.up1, R.drawable.down1,
 			R.drawable.left1, R.drawable.right1, };
-	private static int[] imgs2 = new int[] {
-
-	R.drawable.up2, R.drawable.down2, R.drawable.left2, R.drawable.right2, };
+	private static int[] imgs2 = new int[] { R.drawable.up2, R.drawable.down2, R.drawable.left2, R.drawable.right2, };
 	private static int[] imgs3 = new int[] { R.drawable.up3, R.drawable.down3,
 			R.drawable.left3, R.drawable.right3, };
 	private static int[] imgs4 = new int[] { R.drawable.up4, R.drawable.down4,
@@ -57,12 +55,12 @@ public class TestEyesight extends TabActivity {
 	static Random rand = new Random();
 	static int index = rand.nextInt(4);
 	
-	//right times
+	// right times
 	static int i = 0;
 	// images already shown
 	int j;
 	
-	//define level, six levels, >5.2 one ignore; not that exact
+	// define level, six levels, >5.2 one ignore; not that exact
 	int level;
 
 	@Override
@@ -75,15 +73,16 @@ public class TestEyesight extends TabActivity {
 		backEyesight.setOnClickListener(new ButtonListener());
 
 		myTabhost = this.getTabHost();
-		myTabhost.addTab(myTabhost.newTabSpec("tab1")// make a new Tab
+		myTabhost.addTab(myTabhost.newTabSpec("tab1") // make a new Tab
 				.setIndicator("about eyesight testing", null)
+			
 				// set the Title and Icon
 				.setContent(R.id.eyesight_start_tab));
 		// set the layout
-
-		myTabhost.addTab(myTabhost.newTabSpec("tab2")// make a new Tab
+		myTabhost.addTab(myTabhost.newTabSpec("tab2") // make a new Tab
 				.setIndicator("eyesight testing", null)
-				// set the Title and Icon
+				 
+				 // set the Title and Icon
 				.setContent(R.id.testeyesight_tab));
 		// set the layout
 
@@ -115,7 +114,7 @@ public class TestEyesight extends TabActivity {
 			if (v.getId() == R.id.startEyesight) {
 				myTabhost.setCurrentTabByTag("tab2");		
 			
-				//random get the first picture
+				// random get the first picture
 				getimageView0();
 				index=0;i=0;j=0;
 			} else if (v.getId() == R.id.backEyesight) {
@@ -128,6 +127,7 @@ public class TestEyesight extends TabActivity {
 
 		rand = new Random();
 		index = rand.nextInt(4);
+		
 		// imageView = (ImageView)findViewById(R.id.imageView);
 		imageView.setImageResource(imgs0[index]);
 	}
@@ -258,7 +258,7 @@ public class TestEyesight extends TabActivity {
 		}
 	}
 
-	// level0()£»
+	// level0()ï¿½ï¿½
 	private void level0() {
 
 	
@@ -304,7 +304,7 @@ public class TestEyesight extends TabActivity {
 		else {
 			getimageView1();
 		}
-		// level1() end£»
+		// level1() endï¿½ï¿½
 	}
 
 	// level2();
@@ -322,7 +322,7 @@ public class TestEyesight extends TabActivity {
 			getimageView2();
 		}
 
-		// level2() end£»
+		// level2() endï¿½ï¿½
 	}
 
 	// level3();
@@ -346,7 +346,7 @@ public class TestEyesight extends TabActivity {
 		else {
 			getimageView3();
 		}
-		// level3() end£»
+		// level3() endï¿½ï¿½
 	}
 
 	// level4
@@ -369,7 +369,7 @@ public class TestEyesight extends TabActivity {
 			getimageView4();
 		}
 
-		// level4() end£»
+		// level4() endï¿½ï¿½
 	}
 
 	// level5
@@ -392,7 +392,7 @@ public class TestEyesight extends TabActivity {
 			getimageView5();
 		}
 
-		// level5() end£»
+		// level5() endï¿½ï¿½
 	}
 
 	// getResult();
@@ -404,44 +404,44 @@ public class TestEyesight extends TabActivity {
 		if (level == 0)
 
 		{
-			popresult.setText("Your eyesight is about£º\n3.0~3.5(0.01~0.03)");
+			popresult.setText("Your eyesight is aboutï¿½ï¿½\n3.0~3.5(0.01~0.03)");
 			eyesight_db=0.02;
 		}
 
 		// level1 result
 		else if (level == 1)
 		{
-			popresult.setText("Your eyesight is about£º\n3.5~3.9(0.03~0.08)");
+			popresult.setText("Your eyesight is aboutï¿½ï¿½\n3.5~3.9(0.03~0.08)");
 		}
 
 		// level2 result
 		else if (level == 2) {
-			popresult.setText("Your eyesight is about£º\n3.9~4.3(0.08~0.2)");
+			popresult.setText("Your eyesight is aboutï¿½ï¿½\n3.9~4.3(0.08~0.2)");
 			eyesight_db=0.1;
 		}
 
 		// level3 result
 		else if (level == 3) {
-			popresult.setText("Your eyesight is about£º\n4.3~4.7(0.2~0.5)");
+			popresult.setText("Your eyesight is aboutï¿½ï¿½\n4.3~4.7(0.2~0.5)");
 			eyesight_db=0.4;
 		}
 
 		// level4 result
 		else if (level == 4) {
-			popresult.setText("Your eyesight is about£º\n4.7~5.0(0.5~1.0)");
+			popresult.setText("Your eyesight is aboutï¿½ï¿½\n4.7~5.0(0.5~1.0)");
 			eyesight_db=0.7;
 		}
 
 		// level5 result
 		else if (level == 5) {
-			popresult.setText("Your eyesight is about£º\n5.0~5.2(1.0~1.5)");
+			popresult.setText("Your eyesight is aboutï¿½ï¿½\n5.0~5.2(1.0~1.5)");
 			eyesight_db=1.2;
 		}
 
 		// lower than level0 result,level=-1
 		else
 		{
-			popresult.setText("Your eyesight is£º£º\n lower than 3.0(0.01)");
+			popresult.setText("Your eyesight isï¿½ï¿½ï¿½ï¿½\n lower than 3.0(0.01)");
 			eyesight_db=0.01;
 		}
 
@@ -500,12 +500,13 @@ public class TestEyesight extends TabActivity {
 
 	}
 
-	   //insert database
+	   // insert database
 		private void dbinsert(){
 			DatabaseHelper dbHelper = new DatabaseHelper(TestEyesight.this,"mhms_db");
 			SQLiteDatabase db = dbHelper.getWritableDatabase();
 			SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		    String systemtime = sTime.format(new java.util.Date());	
+		        String systemtime = sTime.format(new java.util.Date());	
+			
 			// insert data
 			ContentValues values = new ContentValues();
 			values.put("systemtime", systemtime);
