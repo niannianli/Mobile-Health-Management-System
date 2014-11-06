@@ -18,6 +18,7 @@ developed for android mobile device;
 in eclipse;
 java programming;
 sqlite;
+xml;
 
 ==
 in this project, we did a great job for our college, we got reward/prize for this project;
