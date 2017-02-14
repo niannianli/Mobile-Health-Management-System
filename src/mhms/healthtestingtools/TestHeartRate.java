@@ -1,6 +1,5 @@
 package mhms.healthtestingtools;
 
-
 import java.text.SimpleDateFormat;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -35,17 +34,16 @@ import android.widget.TextView;
 public class TestHeartRate extends TabActivity {
 	private TabHost myTabhost;
 	protected int myMenuSettingTag = 0;
-	
+
 	private Button startHeartRate;
 	private Button backHeartRate;
 	private int heartrate_db;
-	
+
 	private static Button okheartrate;
 	private static TextView popresulthr1;
 	private static TextView popresulthr2;
 	private static PopupWindow popupheartrate;
-	
-	
+
 	private static final String TAG = "TestHeartRate";
 	private static final AtomicBoolean processing = new AtomicBoolean(false);
 
@@ -55,13 +53,17 @@ public class TestHeartRate extends TabActivity {
 	private static View image = null;
 
 	private static WakeLock wakeLock = null;
-	
+
 	private static int averageIndex = 0;
 	private static final int averageArraySize = 4;
 	private static final int[] averageArray = new int[averageArraySize];
 
-	public static enum TYPE { GREEN, RED };
+	public static enum TYPE {
+		GREEN, RED
+	};
+
 	private static TYPE currentType = TYPE.GREEN;
+
 	public static TYPE getCurrent() {
 		return currentType;
 	}
@@ -72,7 +74,6 @@ public class TestHeartRate extends TabActivity {
 	private static double beats = 0;
 	private static long startTime = 0;
 	private static PreviewCallback previewCallback;
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -102,32 +103,25 @@ public class TestHeartRate extends TabActivity {
 		previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		image = findViewById(R.id.image);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm
-				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 
 	}
 
 	// create PopupWindow
-
 	protected void initPopupWindow() {
 
-		View popupWindow_view = getLayoutInflater().inflate(
-				R.layout.heartratepopresult, null, false);
-		popupheartrate = new PopupWindow(popupWindow_view, 260, 160,
-				true);// create PopupWindow
+		View popupWindow_view = getLayoutInflater().inflate(R.layout.heartratepopresult, null, false);
+		popupheartrate = new PopupWindow(popupWindow_view, 260, 160, true);// create
+																			// PopupWindow
 
-		popresulthr1 = (TextView) popupWindow_view
-				.findViewById(R.id.popresulthr1);
-		popresulthr2 = (TextView) popupWindow_view
-				.findViewById(R.id.popresulthr2);
+		popresulthr1 = (TextView) popupWindow_view.findViewById(R.id.popresulthr1);
+		popresulthr2 = (TextView) popupWindow_view.findViewById(R.id.popresulthr2);
 
-		popupheartrate.setBackgroundDrawable(getResources()
-				.getDrawable(R.drawable.white));
+		popupheartrate.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
 
 		popupheartrate.setFocusable(false);
 
-		okheartrate = (Button) popupWindow_view
-				.findViewById(R.id.okheartrate);
+		okheartrate = (Button) popupWindow_view.findViewById(R.id.okheartrate);
 		okheartrate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -140,24 +134,25 @@ public class TestHeartRate extends TabActivity {
 		});
 		popupheartrate.update();
 	}
-	  //insert database
-			private void dbinsert(){
-				DatabaseHelper dbHelper = new DatabaseHelper(TestHeartRate.this,"mhms_db");
-				SQLiteDatabase db = dbHelper.getWritableDatabase();
-				SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			    String systemtime = sTime.format(new java.util.Date());	
-				// insert data
-				ContentValues values = new ContentValues();
-				values.put("systemtime", systemtime);
-				values.put("heartrate", heartrate_db);
-				db.insert("heartratetable", null, values);
-				db.close();
-			}
-	
+
+	// insert database
+	private void dbinsert() {
+		DatabaseHelper dbHelper = new DatabaseHelper(TestHeartRate.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String systemtime = sTime.format(new java.util.Date());
+		// insert data
+		ContentValues values = new ContentValues();
+		values.put("systemtime", systemtime);
+		values.put("heartrate", heartrate_db);
+		db.insert("heartratetable", null, values);
+		db.close();
+	}
+
 	class ButtonListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			if (v.getId() == R.id.startHeartRate) {				
+			if (v.getId() == R.id.startHeartRate) {
 				myTabhost.setCurrentTabByTag("tab2");
 				camera.setPreviewCallback(previewCallback);
 				previewCallback = new PreviewCallback() {
@@ -176,9 +171,8 @@ public class TestHeartRate extends TabActivity {
 						int width = size.width;
 						int height = size.height;
 						// get ImageProcessing.java
-					
-						int imgAvg = ImageProcessing.decodeYUV420SPtoRedAvg(
-								data.clone(), height, width);
+
+						int imgAvg = ImageProcessing.decodeYUV420SPtoRedAvg(data.clone(), height, width);
 						Log.i(TAG, "imgAvg=" + imgAvg);
 						if (imgAvg == 0 || imgAvg == 255) {
 							processing.set(false);
@@ -194,13 +188,12 @@ public class TestHeartRate extends TabActivity {
 							}
 						}
 
-						int rollingAverage = (averageArrayCnt > 0) ? (averageArrayAvg / averageArrayCnt)
-								: 0;
+						int rollingAverage = (averageArrayCnt > 0) ? (averageArrayAvg / averageArrayCnt) : 0;
 						TYPE newType = currentType;
 						if (imgAvg < rollingAverage) {
 							newType = TYPE.RED;
-						
-							//red means heart beat
+
+							// red means heart beat
 							if (newType != currentType) {
 								beats++;
 								Log.e(TAG, "BEAT!! beats=" + beats);
@@ -209,8 +202,7 @@ public class TestHeartRate extends TabActivity {
 							newType = TYPE.GREEN;
 						}
 
-					
-						//when get right image, means get heart beat, add one
+						// when get right image, means get heart beat, add one
 						if (averageIndex == averageArraySize)
 							averageIndex = 0;
 						averageArray[averageIndex] = imgAvg;
@@ -224,28 +216,28 @@ public class TestHeartRate extends TabActivity {
 
 						long endTime = System.currentTimeMillis();
 						double totalTimeInSecs = (endTime - startTime) / 1000d;
-						
-						//time over 10s, calculate heart rate once
+
+						// time over 10s, calculate heart rate once
 						if (totalTimeInSecs >= 10) {
 							double bps = (beats / totalTimeInSecs);
-						
-							//dmp is heart rate, only the once, we should get average
+
+							// dmp is heart rate, only the once, we should get
+							// average
 							int dpm = (int) (bps * 60d);
-							
-							//heart rate in this range, no use
+
+							// heart rate in this range, no use
 							if (dpm < 30 || dpm > 180) {
 								startTime = System.currentTimeMillis();
-							
-								//heart beat to zero, no use, calculate again
+
+								// heart beat to zero, no use, calculate again
 								beats = 0;
 								processing.set(false);
 								return;
 							}
 
-							Log.e(TAG, "totalTimeInSecs=" + totalTimeInSecs + " beats="
-									+ beats);
-						
-							//add right heart rate to array
+							Log.e(TAG, "totalTimeInSecs=" + totalTimeInSecs + " beats=" + beats);
+
+							// add right heart rate to array
 							if (beatsIndex == beatsArraySize)
 								beatsIndex = 0;
 							beatsArray[beatsIndex] = dpm;
@@ -255,33 +247,30 @@ public class TestHeartRate extends TabActivity {
 							int beatsArrayCnt = 0;
 							for (int i = 0; i < beatsArray.length; i++) {
 								if (beatsArray[i] > 0) {
-									
-									//total
+
+									// total
 									beatsArrayAvg += beatsArray[i];
 									// number of values
 									beatsArrayCnt++;
 								}
 							}
 
-					
-							//averagy
+							// averagy
 							int beatsAvg = (beatsArrayAvg / beatsArrayCnt);
-							heartrate_db =beatsAvg;
+							heartrate_db = beatsAvg;
 
-							//show user the average result
+							// show user the average result
 							getPopupWindow();
-							popresulthr1.setText("Your heart rate is" + String.valueOf(beatsAvg)
-									+ "!");
+							popresulthr1.setText("Your heart rate is" + String.valueOf(beatsAvg) + "!");
 							if (beatsAvg > 100) {
-								popresulthr2.setText("Your heart rate is fast£¡");
+								popresulthr2.setText("Your heart rate is fastï¿½ï¿½");
 							} else if (beatsAvg >= 60 & beatsAvg <= 100) {
-								popresulthr2.setText("Your heart rate is normal£¡");
+								popresulthr2.setText("Your heart rate is normalï¿½ï¿½");
 							} else {
-								popresulthr2.setText("Your heart rate is slow£¡");
+								popresulthr2.setText("Your heart rate is slowï¿½ï¿½");
 							}
 
-							popupheartrate.showAtLocation(findViewById(R.id.testheartrate_tab),
-									Gravity.CENTER, 0, 0);
+							popupheartrate.showAtLocation(findViewById(R.id.testheartrate_tab), Gravity.CENTER, 0, 0);
 
 							startTime = System.currentTimeMillis();
 							beats = 0;
@@ -296,25 +285,21 @@ public class TestHeartRate extends TabActivity {
 						if (null != popupheartrate) {
 							popupheartrate.dismiss();
 							return;
-						}
-						else {
+						} else {
 							initPopupWindow();
 						}
 					}
-			
+
 				};
 			} else if (v.getId() == R.id.backHeartRate) {
 				camera.setPreviewCallback(null);
 				myTabhost.setCurrentTabByTag("tab1");
-			
+
 			}
 		}
 	}
 
-
-
-
-	//switch screen
+	// switch screen
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -346,21 +331,18 @@ public class TestHeartRate extends TabActivity {
 				camera.setPreviewDisplay(previewHolder);
 				camera.setPreviewCallback(previewCallback);
 			} catch (Throwable t) {
-				Log.e("PreviewDemo-surfaceCallback",
-						"Exception in setPreviewDisplay()", t);
+				Log.e("PreviewDemo-surfaceCallback", "Exception in setPreviewDisplay()", t);
 			}
 		}
 
 		@Override
-		public void surfaceChanged(SurfaceHolder holder, int format, int width,
-				int height) {
+		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 			Camera.Parameters parameters = camera.getParameters();
 			parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
 			Camera.Size size = getSmallestPreviewSize(width, height, parameters);
 			if (size != null) {
 				parameters.setPreviewSize(size.width, size.height);
-				Log.d(TAG, "Using width=" + size.width + " height="
-						+ size.height);
+				Log.d(TAG, "Using width=" + size.width + " height=" + size.height);
 			}
 			camera.setParameters(parameters);
 			camera.startPreview();
@@ -372,8 +354,7 @@ public class TestHeartRate extends TabActivity {
 		}
 	};
 
-	private static Camera.Size getSmallestPreviewSize(int width, int height,
-			Camera.Parameters parameters) {
+	private static Camera.Size getSmallestPreviewSize(int width, int height, Camera.Parameters parameters) {
 		Camera.Size result = null;
 
 		for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
@@ -391,10 +372,8 @@ public class TestHeartRate extends TabActivity {
 		}
 
 		return result;
-	}	
-	
-	
-	
+	}
+
 	/**
 	 * create MENU
 	 */
@@ -422,7 +401,7 @@ public class TestHeartRate extends TabActivity {
 		}
 		return false;
 	}
-	
+
 	public void onBackPressed() {
 		if (myTabhost.getCurrentTabTag() == "tab2") {
 			myTabhost.setCurrentTabByTag("tab1");
@@ -432,6 +411,5 @@ public class TestHeartRate extends TabActivity {
 			// startActivity(intent);
 		}
 	}
-	
-	
+
 }

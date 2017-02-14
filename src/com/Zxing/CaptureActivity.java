@@ -57,51 +57,59 @@ public class CaptureActivity extends Activity implements Callback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.zxing);
-		//initial CameraManager
+		// initial CameraManager
 		CameraManager.init(getApplication());
 
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		txtResult = (TextView) findViewById(R.id.txtResult);
-		camera_savebtn=(Button)findViewById(R.id.camera_savebtn);
-		camera_returnbtn=(Button)findViewById(R.id.camera_returnbtn);
-		camera_savebtn.setVisibility(Button.GONE);//initially set submit button invisible
+		camera_savebtn = (Button) findViewById(R.id.camera_savebtn);
+		camera_returnbtn = (Button) findViewById(R.id.camera_returnbtn);
+		camera_savebtn.setVisibility(Button.GONE);// initially set submit button
+													// invisible
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 		// get intent parameter
 		Intent intent_camera = getIntent();
-		from_where = intent_camera.getIntExtra("from_where",0);
-		
+		from_where = intent_camera.getIntExtra("from_where", 0);
+
 		// submit button event
-		camera_savebtn.setOnClickListener(new OnClickListener(){
+		camera_savebtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(from_where==1){
-				Intent intent =new Intent(CaptureActivity.this,HealthReport_Camera.class);
-				intent.putExtra("healthreport_camera_send", Catch_Result);//parse result to intent
-				CaptureActivity.this.finish();
-				startActivity(intent);}
-			else if(from_where==2)
-			{
-				Intent intent =new Intent(CaptureActivity.this,MedicineRecord_Camera.class);
-				intent.putExtra("medicinerecord_camera_send", Catch_Result);//parse result to intent
-				CaptureActivity.this.finish();
-				startActivity(intent);}
+				if (from_where == 1) {
+					Intent intent = new Intent(CaptureActivity.this, HealthReport_Camera.class);
+					intent.putExtra("healthreport_camera_send", Catch_Result);// parse
+																				// result
+																				// to
+																				// intent
+					CaptureActivity.this.finish();
+					startActivity(intent);
+				} else if (from_where == 2) {
+					Intent intent = new Intent(CaptureActivity.this, MedicineRecord_Camera.class);
+					intent.putExtra("medicinerecord_camera_send", Catch_Result);// parse
+																				// result
+																				// to
+																				// intent
+					CaptureActivity.this.finish();
+					startActivity(intent);
+				}
 			}
 		});
-		//return button event
-		camera_returnbtn.setOnClickListener(new OnClickListener(){
+		// return button event
+		camera_returnbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(from_where==1){
-					HealthReport.myTabhost.setCurrentTabByTag("tab2");}
-				else if(from_where==2){								
-					MedicineRecord.myTabhost.setCurrentTabByTag("tab2");}
+				if (from_where == 1) {
+					HealthReport.myTabhost.setCurrentTabByTag("tab2");
+				} else if (from_where == 2) {
+					MedicineRecord.myTabhost.setCurrentTabByTag("tab2");
+				}
 			}
 
 		});
-		
+
 	}
 
 	@Override
@@ -152,14 +160,12 @@ public class CaptureActivity extends Activity implements Callback {
 			return;
 		}
 		if (handler == null) {
-			handler = new CaptureActivityHandler(this, decodeFormats,
-					characterSet);
+			handler = new CaptureActivityHandler(this, decodeFormats, characterSet);
 		}
 	}
 
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
 	}
 
@@ -194,11 +200,12 @@ public class CaptureActivity extends Activity implements Callback {
 	public void handleDecode(Result obj, Bitmap barcode) {
 		inactivityTimer.onActivity();
 		viewfinderView.drawResultBitmap(barcode);
-		 playBeepSoundAndVibrate();
-		txtResult.setText(obj.getBarcodeFormat().toString() + ":"
-				+ obj.getText());
-		Catch_Result=obj.getText();// get parse string from QR code 
-		camera_savebtn.setVisibility(Button.VISIBLE);//parse QR code successfully, then set button visible
+		playBeepSoundAndVibrate();
+		txtResult.setText(obj.getBarcodeFormat().toString() + ":" + obj.getText());
+		Catch_Result = obj.getText();// get parse string from QR code
+		camera_savebtn.setVisibility(Button.VISIBLE);// parse QR code
+														// successfully, then
+														// set button visible
 	}
 
 	private void initBeepSound() {
@@ -211,11 +218,9 @@ public class CaptureActivity extends Activity implements Callback {
 			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			mediaPlayer.setOnCompletionListener(beepListener);
 
-			AssetFileDescriptor file = getResources().openRawResourceFd(
-					R.raw.beep);
+			AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
 			try {
-				mediaPlayer.setDataSource(file.getFileDescriptor(),
-						file.getStartOffset(), file.getLength());
+				mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
 				file.close();
 				mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
 				mediaPlayer.prepare();

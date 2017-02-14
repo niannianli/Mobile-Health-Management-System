@@ -35,7 +35,7 @@ public class BMI extends Activity {
 	private TextView popresult1;
 	private TextView popresult2;
 	private Button okbmi;
-	private float weight,height,BMI;
+	private float weight, height, BMI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,64 +51,54 @@ public class BMI extends Activity {
 			public void onClick(View v) {
 				String weightStr = weightEditText.getText().toString().trim();
 				String heightStr = heightEditText.getText().toString().trim();
-				if (weightStr.equals("") || weightStr.equals(null)
-						|| weightStr.equals(".") || heightStr.equals("")
+				if (weightStr.equals("") || weightStr.equals(null) || weightStr.equals(".") || heightStr.equals("")
 						|| heightStr.equals(null) || heightStr.equals(".")) {
 
 					AlertDialog.Builder returnbuilder = new Builder(BMI.this);
-					returnbuilder.setMessage("ÇëÊäÈëÕýÈ·Éí¸ßºÍÌåÖØ");
-					returnbuilder.setTitle("ÌáÊ¾");
-					returnbuilder.setPositiveButton("È·ÈÏ",new android.content.DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog,int which) {
-											dialog.dismiss();
-										}
-									});
-					returnbuilder.setNegativeButton("È¡Ïû",
-									new android.content.DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(DialogInterface dialog,int which) {
-											dialog.dismiss();
-										}
-									});
+					returnbuilder.setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½");
+					returnbuilder.setTitle("ï¿½ï¿½Ê¾");
+					returnbuilder.setPositiveButton("È·ï¿½ï¿½", new android.content.DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					returnbuilder.setNegativeButton("È¡ï¿½ï¿½", new android.content.DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
 					returnbuilder.create().show();
 				}
-				// ¼ÆËãBMI
+				// ï¿½ï¿½ï¿½ï¿½BMI
 				else {
 					DecimalFormat nf = new DecimalFormat("0.00");
 					weight = Float.parseFloat(weightStr);
 					height = Float.parseFloat(heightStr) / 100;
 					BMI = Float.parseFloat(nf.format(weight / (height * height)));
 
-					
-					//get dialog, show BMI result
+					// get dialog, show BMI result
 					getPopupWindow();
 
 					popresult1.setText("Your BMI is" + BMI);
-					if (BMI >= 28)
-					{
-						popresult2.setText("You are too heavy£¡");
-					}
-					else if (BMI >= 24 & BMI < 28)
-					{
-						popresult2.setText("You are overweight£¡");
+					if (BMI >= 28) {
+						popresult2.setText("You are too heavyï¿½ï¿½");
+					} else if (BMI >= 24 & BMI < 28) {
+						popresult2.setText("You are overweightï¿½ï¿½");
 					} else if (BMI < 18.5) {
-						popresult2.setText("You are too thin£¡");
-					} else
-					{
+						popresult2.setText("You are too thinï¿½ï¿½");
+					} else {
 						popresult2.setText("You are in good shape");
 					}
 
-				
-					//the location of the dialog
-					popupbmi.showAtLocation(findViewById(R.id.bmi),
-							Gravity.CENTER, 0, 0);
+					// the location of the dialog
+					popupbmi.showAtLocation(findViewById(R.id.bmi), Gravity.CENTER, 0, 0);
 					// else end
 				}
 				// click end
 			}
 		});
-
 
 		// onCreat end
 	}
@@ -131,24 +121,21 @@ public class BMI extends Activity {
 
 	protected void initPopupWindow() {
 
-		
-		//get layout
-		View popupWindow_view = getLayoutInflater().inflate(
-				R.layout.bmipopresult, null, false);
+		// get layout
+		View popupWindow_view = getLayoutInflater().inflate(R.layout.bmipopresult, null, false);
 
-
-		//create PopupWindow
+		// create PopupWindow
 		popupbmi = new PopupWindow(popupWindow_view, 260, 160, true);
 
 		// show BMI result
 		popresult1 = (TextView) popupWindow_view.findViewById(R.id.popresult1);
 		popresult2 = (TextView) popupWindow_view.findViewById(R.id.popresult2);
 
-		//change background of PopupWindow
-		popupbmi.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.white));
-	
-		//set false, close PopupWindow by OkButton; set true, area outside PopupWindow can close window
+		// change background of PopupWindow
+		popupbmi.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
+
+		// set false, close PopupWindow by OkButton; set true, area outside
+		// PopupWindow can close window
 		popupbmi.setFocusable(false);
 
 		okbmi = (Button) popupWindow_view.findViewById(R.id.okbmi);
@@ -157,10 +144,10 @@ public class BMI extends Activity {
 			public void onClick(View arg0) {
 				// close dialog
 				dbinsert();
-				MhmsLog.mhmslog(BMI.this, MhmsLog.BMI_Test, "½øÐÐÁËÒ»´ÎBMI¼ÆËã");
+				MhmsLog.mhmslog(BMI.this, MhmsLog.BMI_Test, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½BMIï¿½ï¿½ï¿½ï¿½");
 				popupbmi.dismiss();
-			
-				//restart current activity
+
+				// restart current activity
 				onCreate(null);
 				return;
 			}
@@ -170,22 +157,22 @@ public class BMI extends Activity {
 		// initPopupWindow() end
 	}
 
-	
-	//insert data
-		private void dbinsert(){
-			DatabaseHelper dbHelper = new DatabaseHelper(BMI.this,"mhms_db");
-			SQLiteDatabase db = dbHelper.getWritableDatabase();
-			SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		    String systemtime = sTime.format(new java.util.Date());	
-			// insert data
-			ContentValues values = new ContentValues();
-			values.put("systemtime", systemtime);
-			values.put("bodyheight", height);
-			values.put("bodyweight", weight);
-			values.put("bmi", BMI);
-			db.insert("bmitable", null, values);
-			db.close();
-		}
+	// insert data
+	private void dbinsert() {
+		DatabaseHelper dbHelper = new DatabaseHelper(BMI.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String systemtime = sTime.format(new java.util.Date());
+		// insert data
+		ContentValues values = new ContentValues();
+		values.put("systemtime", systemtime);
+		values.put("bodyheight", height);
+		values.put("bodyweight", weight);
+		values.put("bmi", BMI);
+		db.insert("bmitable", null, values);
+		db.close();
+	}
+
 	/**
 	 * create MENU
 	 */

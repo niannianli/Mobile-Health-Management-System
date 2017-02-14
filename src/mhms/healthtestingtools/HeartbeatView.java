@@ -11,64 +11,61 @@ import android.view.View;
 import mhms.healthrecords.R;
 
 public class HeartbeatView extends View {
-	
+
 	private static final Matrix matrix = new Matrix();
 	private static final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	
+
 	private static Bitmap greenBitmap = null;
 	private static Bitmap redBitmap = null;
-	
+
 	private static int parentWidth = 0;
 	private static int parentHeight = 0;
-	
 
-    public HeartbeatView(Context context, AttributeSet attr) {
-        super(context,attr);
+	public HeartbeatView(Context context, AttributeSet attr) {
+		super(context, attr);
 
-        greenBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.green_icon);
-        redBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_icon);
-    }
-    
+		greenBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.green_icon);
+		redBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_icon);
+	}
 
-    public HeartbeatView(Context context) {
-        super(context);
+	public HeartbeatView(Context context) {
+		super(context);
 
-        greenBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.green_icon);
-        redBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_icon);
-    }
-    
+		greenBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.green_icon);
+		redBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red_icon);
+	}
 
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+		parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+		setMeasuredDimension(parentWidth, parentHeight);
+	}
 
-        parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-        parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-        setMeasuredDimension(parentWidth, parentHeight);
-    }
-    
+	@Override
+	protected void onDraw(Canvas canvas) {
+		if (canvas == null)
+			throw new NullPointerException();
 
+		Bitmap bitmap = null;
+		if (TestHeartRate.getCurrent() == TestHeartRate.TYPE.GREEN)
+			bitmap = greenBitmap;
+		else
+			bitmap = redBitmap;
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-    	if (canvas==null) throw new NullPointerException();
+		int bitmapX = bitmap.getWidth() / 2;
+		int bitmapY = bitmap.getHeight() / 2;
 
-    	Bitmap bitmap = null;
-        if (TestHeartRate.getCurrent()==TestHeartRate.TYPE.GREEN) bitmap = greenBitmap;
-        else bitmap = redBitmap;
-        
-        int bitmapX = bitmap.getWidth()/2;
-        int bitmapY = bitmap.getHeight()/2;
-        
-        int parentX = parentWidth/2;
-        int parentY = parentHeight/2;
-        
-        int centerX = parentX-bitmapX;
-        int centerY = parentY-bitmapY;
-    	
-        matrix.reset();
-        matrix.postTranslate(centerX, centerY);
-        canvas.drawBitmap(bitmap, matrix, paint);
-    }
+		int parentX = parentWidth / 2;
+		int parentY = parentHeight / 2;
+
+		int centerX = parentX - bitmapX;
+		int centerY = parentY - bitmapY;
+
+		matrix.reset();
+		matrix.postTranslate(centerX, centerY);
+		canvas.drawBitmap(bitmap, matrix, paint);
+	}
 }

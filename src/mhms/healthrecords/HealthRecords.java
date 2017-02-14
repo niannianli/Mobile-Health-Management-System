@@ -40,14 +40,11 @@ public class HealthRecords extends ActivityGroup {
 	private ActionBar actionBar;
 	private GridView gvBar;
 	private ImageAdapter ImgAdapter;
-	public LinearLayout container;//for sub Activity
+	public LinearLayout container;// for sub Activity
 	private View dialogview;
 
-
-
 	/** top button image **/
-	int[] bar_image_array = { R.drawable.bar_btn, R.drawable.bar_btn,
-			R.drawable.bar_btn, R.drawable.bar_btn };
+	int[] bar_image_array = { R.drawable.bar_btn, R.drawable.bar_btn, R.drawable.bar_btn, R.drawable.bar_btn };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,25 +52,24 @@ public class HealthRecords extends ActivityGroup {
 		setContentView(R.layout.healthrecords);
 
 		actionBar = (ActionBar) findViewById(R.id.actionbar);// add actionbar
-		
-		//add actionbar return to homepage
-		actionBar.setHomeAction(new IntentAction(this, backToMainIntent(this),
-				R.drawable.ic_title_home_default));
-		//add actionbar help dialog
-	
-		actionBar.addAction(new DialogAction(createDialog(),
-				R.drawable.help_button));
+
+		// add actionbar return to homepage
+		actionBar.setHomeAction(new IntentAction(this, backToMainIntent(this), R.drawable.ic_title_home_default));
+		// add actionbar help dialog
+
+		actionBar.addAction(new DialogAction(createDialog(), R.drawable.help_button));
 
 		gvBar = (GridView) this.findViewById(R.id.gvBar);
 		gvBar.setNumColumns(bar_image_array.length);// set columns
-		gvBar.setSelector(new ColorDrawable(Color.TRANSPARENT));//set transparent color when chosen
-		gvBar.setGravity(Gravity.CENTER);//  in the middle
+		gvBar.setSelector(new ColorDrawable(Color.TRANSPARENT));// set
+																// transparent
+																// color when
+																// chosen
+		gvBar.setGravity(Gravity.CENTER);// in the middle
 		gvBar.setVerticalSpacing(0);// space in vertical
-		int width = this.getWindowManager().getDefaultDisplay().getWidth()
-				/ bar_image_array.length;
-		ImgAdapter = new ImageAdapter(this, bar_image_array, width, 60,
-				R.drawable.bar_itemselector);
-		gvBar.setAdapter(ImgAdapter);//Adapter set menu adpater
+		int width = this.getWindowManager().getDefaultDisplay().getWidth() / bar_image_array.length;
+		ImgAdapter = new ImageAdapter(this, bar_image_array, width, 60, R.drawable.bar_itemselector);
+		gvBar.setAdapter(ImgAdapter);// Adapter set menu adpater
 		gvBar.setOnItemClickListener(new ItemClickEvent());// item Listener
 		container = (LinearLayout) findViewById(R.id.Container);
 		SwitchActivity(0);// open 0 page in default
@@ -81,14 +77,13 @@ public class HealthRecords extends ActivityGroup {
 	}
 
 	class ItemClickEvent implements OnItemClickListener {
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			SwitchActivity(arg2);
 		}
 	}
 
 	/**
-	 *  open needed Activity according to ID
+	 * open needed Activity according to ID
 	 * 
 	 * @param id
 	 *            GridView get middle size font
@@ -100,7 +95,7 @@ public class HealthRecords extends ActivityGroup {
 		if (id == 0) {
 			ID = 0;
 			intent = new Intent(HealthRecords.this, HealthDailyRecord.class);
-			Toast.makeText(this, "health daily record", Toast.LENGTH_SHORT).show();			
+			Toast.makeText(this, "health daily record", Toast.LENGTH_SHORT).show();
 		} else if (id == 1) {
 			ID = 1;
 			intent = new Intent(HealthRecords.this, HealthReport.class);
@@ -117,11 +112,9 @@ public class HealthRecords extends ActivityGroup {
 
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		// Activity to View
-		Window subActivity = getLocalActivityManager().startActivity(
-				"subActivity", intent);
+		Window subActivity = getLocalActivityManager().startActivity("subActivity", intent);
 		// add View to container
-		container.addView(subActivity.getDecorView(), LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
+		container.addView(subActivity.getDecorView(), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 	}
 
 	// back to home page
@@ -131,11 +124,10 @@ public class HealthRecords extends ActivityGroup {
 		return intent;
 	}
 
-	//ActionBar: get help dialog
+	// ActionBar: get help dialog
 	private Builder createDialog() {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				HealthRecords.this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(HealthRecords.this);
 		LayoutInflater inflater = getLayoutInflater();
 		dialogview = inflater.inflate(R.layout.healthrecords_help_dialog, null);
 		builder.setTitle("help");
@@ -158,16 +150,15 @@ public class HealthRecords extends ActivityGroup {
 		});
 		return builder;
 	};
-//back button; 0:quit?; others: id!=0, back to default page
-	
+	// back button; 0:quit?; others: id!=0, back to default page
+
 	public void onBackPressed() {
 		Toast.makeText(this, "return", Toast.LENGTH_SHORT).show();
 		if (ID != 0) {
 			SwitchActivity(0);
 		} else {
-			
-			AlertDialog.Builder returnbuilder = new Builder(
-					HealthRecords.this);
+
+			AlertDialog.Builder returnbuilder = new Builder(HealthRecords.this);
 			returnbuilder.setMessage("quit?");
 			returnbuilder.setTitle("hint");
 			returnbuilder.setPositiveButton("submit", new OnClickListener() {
@@ -187,7 +178,6 @@ public class HealthRecords extends ActivityGroup {
 		}
 
 	};
-
 
 	/**
 	 * create MENU

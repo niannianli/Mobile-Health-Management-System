@@ -82,12 +82,11 @@ public class HealthReport extends TabActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.healthreport);
-		
 
 		healthreportlist_title = (TextView) findViewById(R.id.healthreportlist_title);
 		id_get = (TextView) findViewById(R.id.report_id_get);
 		systemtime_get = (TextView) findViewById(R.id.report_systemtime_get);
-		
+
 		bodyheight = (EditText) findViewById(R.id.report_height);
 		bodyweight = (EditText) findViewById(R.id.report_weight);
 		eyesight = (EditText) findViewById(R.id.report_eyesight);
@@ -109,7 +108,6 @@ public class HealthReport extends TabActivity {
 		surgery_get = (EditText) findViewById(R.id.report_surgery_get);
 		internal_get = (EditText) findViewById(R.id.report_internal_get);
 		bloodroutine_get = (EditText) findViewById(R.id.report_bloodroutine_get);
-
 
 		bodyheight.setHint("put height");
 		bodyweight.setHint("put weight:");
@@ -141,8 +139,8 @@ public class HealthReport extends TabActivity {
 		returnbtn1.setOnClickListener(new ButtonListener());
 		returnbtn2.setOnClickListener(new ButtonListener());
 		returnadd.setOnClickListener(new ButtonListener());
-		myTabhost = this.getTabHost();		
-		intent_camera = new Intent(this, CaptureActivity.class);		
+		myTabhost = this.getTabHost();
+		intent_camera = new Intent(this, CaptureActivity.class);
 		intent_camera.putExtra("from_where", 1);
 		myTabhost.addTab(myTabhost.newTabSpec("tab1")// make a new Tab
 				.setIndicator("body examination report", null)
@@ -169,14 +167,13 @@ public class HealthReport extends TabActivity {
 		healthreportlist_show();
 	}
 
-
-	//Listener
+	// Listener
 	class ButtonListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.healthreport_toaddbtn) {
 				myTabhost.setCurrentTabByTag("tab2");
-			} else if (v.getId() == R.id.healthreport_barcodebtn) {			
+			} else if (v.getId() == R.id.healthreport_barcodebtn) {
 				myTabhost.setCurrentTabByTag("tab3");
 			} else if (v.getId() == R.id.healthreport_clearbtn) {
 				bodyheight.setText(null);
@@ -199,47 +196,34 @@ public class HealthReport extends TabActivity {
 				String bloodsugarStr = bloodsugar.getText().toString().trim();
 				String bloodlipidStr = bloodlipid.getText().toString().trim();
 
-				if (heightStr.equals("") || heightStr.equals(".")|| heightStr.equals(null) 
-						|| weightStr.equals("")|| weightStr.equals(".") || weightStr.equals(null)
-						|| eyesightStr.equals("") || eyesightStr.equals(".")|| eyesightStr.equals(null) 
-						|| heartrateStr.equals("")|| heartrateStr.equals(".")|| heartrateStr.equals(null)
-						|| bloodpressureStr.equals("")|| bloodpressureStr.equals(".")|| bloodpressureStr.equals(null)
-						|| bloodsugarStr.equals("")|| bloodsugarStr.equals(".")|| bloodsugarStr.equals(null)
-						|| bloodlipidStr.equals("")|| bloodlipidStr.equals(".")|| bloodlipidStr.equals(null)) {
-					Toast.makeText(HealthReport.this, "put correct data",
-							Toast.LENGTH_SHORT).show();
+				if (heightStr.equals("") || heightStr.equals(".") || heightStr.equals(null) || weightStr.equals("")
+						|| weightStr.equals(".") || weightStr.equals(null) || eyesightStr.equals("")
+						|| eyesightStr.equals(".") || eyesightStr.equals(null) || heartrateStr.equals("")
+						|| heartrateStr.equals(".") || heartrateStr.equals(null) || bloodpressureStr.equals("")
+						|| bloodpressureStr.equals(".") || bloodpressureStr.equals(null) || bloodsugarStr.equals("")
+						|| bloodsugarStr.equals(".") || bloodsugarStr.equals(null) || bloodlipidStr.equals("")
+						|| bloodlipidStr.equals(".") || bloodlipidStr.equals(null)) {
+					Toast.makeText(HealthReport.this, "put correct data", Toast.LENGTH_SHORT).show();
 				} else {
 					dbinsert();
 					MhmsLog.mhmslog(HealthReport.this, MhmsLog.HealthReport_CREATE, "added a health report");
-					AlertDialog.Builder returnbuilder = new Builder(
-							HealthReport.this);
+					AlertDialog.Builder returnbuilder = new Builder(HealthReport.this);
 					returnbuilder.setMessage("saved");
 					returnbuilder.setTitle("hint");
-					returnbuilder
-							.setPositiveButton(
-									"submit",
-									new android.content.DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											myTabhost
-													.setCurrentTabByTag("tab1");
-											healthreportlist_show();
-											dialog.dismiss();
-										}
-									});
-					returnbuilder
-							.setNegativeButton(
-									"cancel",
-									new android.content.DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											dialog.dismiss();
-										}
-									});
+					returnbuilder.setPositiveButton("submit", new android.content.DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							myTabhost.setCurrentTabByTag("tab1");
+							healthreportlist_show();
+							dialog.dismiss();
+						}
+					});
+					returnbuilder.setNegativeButton("cancel", new android.content.DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
 					returnbuilder.create().show();
 				}
 			} else if (v.getId() == R.id.healthreport_updatebtn) {
@@ -247,60 +231,43 @@ public class HealthReport extends TabActivity {
 				String weightStr = bodyweight_get.getText().toString().trim();
 				String eyesightStr = eyesight_get.getText().toString().trim();
 				String heartrateStr = heartrate_get.getText().toString().trim();
-				String bloodpressureStr = bloodpressure_get.getText()
-						.toString().trim();
-				String bloodsugarStr = bloodsugar_get.getText().toString()
-						.trim();
-				String bloodlipidStr = bloodlipid_get.getText().toString()
-						.trim();
+				String bloodpressureStr = bloodpressure_get.getText().toString().trim();
+				String bloodsugarStr = bloodsugar_get.getText().toString().trim();
+				String bloodlipidStr = bloodlipid_get.getText().toString().trim();
 
-				if (heightStr.equals("") || heightStr.equals(".")|| heightStr.equals(null) 
-						|| weightStr.equals("")|| weightStr.equals(".") || weightStr.equals(null)
-						|| eyesightStr.equals("") || eyesightStr.equals(".")|| eyesightStr.equals(null) 
-						|| heartrateStr.equals("")|| heartrateStr.equals(".")|| heartrateStr.equals(null)
-						|| bloodpressureStr.equals("")|| bloodpressureStr.equals(".")|| bloodpressureStr.equals(null)
-						|| bloodsugarStr.equals("")|| bloodsugarStr.equals(".")|| bloodsugarStr.equals(null)
-						|| bloodlipidStr.equals("")|| bloodlipidStr.equals(".")|| bloodlipidStr.equals(null)) {
-					Toast.makeText(HealthReport.this, "put correct data",
-							Toast.LENGTH_SHORT).show();
+				if (heightStr.equals("") || heightStr.equals(".") || heightStr.equals(null) || weightStr.equals("")
+						|| weightStr.equals(".") || weightStr.equals(null) || eyesightStr.equals("")
+						|| eyesightStr.equals(".") || eyesightStr.equals(null) || heartrateStr.equals("")
+						|| heartrateStr.equals(".") || heartrateStr.equals(null) || bloodpressureStr.equals("")
+						|| bloodpressureStr.equals(".") || bloodpressureStr.equals(null) || bloodsugarStr.equals("")
+						|| bloodsugarStr.equals(".") || bloodsugarStr.equals(null) || bloodlipidStr.equals("")
+						|| bloodlipidStr.equals(".") || bloodlipidStr.equals(null)) {
+					Toast.makeText(HealthReport.this, "put correct data", Toast.LENGTH_SHORT).show();
 				} else {
 					dbupdate();
-					AlertDialog.Builder returnbuilder = new Builder(
-							HealthReport.this);
+					AlertDialog.Builder returnbuilder = new Builder(HealthReport.this);
 					returnbuilder.setMessage("modified");
 					returnbuilder.setTitle("hint");
-					returnbuilder
-							.setPositiveButton(
-									"submit",
-									new android.content.DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											myTabhost
-													.setCurrentTabByTag("tab1");
-											healthreportlist_show();
-											dialog.dismiss();
-										}
-									});
-					returnbuilder
-							.setNegativeButton(
-									"cancel",
-									new android.content.DialogInterface.OnClickListener() {
-										@Override
-										public void onClick(
-												DialogInterface dialog,
-												int which) {
-											dialog.dismiss();
-										}
-									});
+					returnbuilder.setPositiveButton("submit", new android.content.DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							myTabhost.setCurrentTabByTag("tab1");
+							healthreportlist_show();
+							dialog.dismiss();
+						}
+					});
+					returnbuilder.setNegativeButton("cancel", new android.content.DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
 					returnbuilder.create().show();
 				}
 
 			} else if (v.getId() == R.id.healthreport_deletebtn) {
 				dbdelete();
-				Toast.makeText(HealthReport.this, "deleted", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(HealthReport.this, "deleted", Toast.LENGTH_SHORT).show();
 			} else if (v.getId() == R.id.healthreport_returnlist1) {
 				myTabhost.setCurrentTabByTag("tab1");
 				healthreportlist_show();
@@ -315,34 +282,30 @@ public class HealthReport extends TabActivity {
 
 	}
 
-	//  query database, show list
+	// query database, show list
 	private void healthreportlist_show() {
-		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this,"mhms_db");
-		SQLiteDatabase db= dbHelper.getReadableDatabase();
+		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
 		lists = new ArrayList<HashMap<String, Object>>();
-		Cursor cursor = db.query("healthreport",
-				new String[] { "id,systemtime" }, null, null, null, null, null,
-				null);
+		Cursor cursor = db.query("healthreport", new String[] { "id,systemtime" }, null, null, null, null, null, null);
 		while (cursor.moveToNext()) {
 			HashMap<String, Object> listmap = new HashMap<String, Object>();
 			listmap.put("id", cursor.getString(cursor.getColumnIndex("id")));
-			listmap.put("systemtime",
-					cursor.getString(cursor.getColumnIndex("systemtime")));
+			listmap.put("systemtime", cursor.getString(cursor.getColumnIndex("systemtime")));
 			listmap.put("action", "view");
 			lists.add(listmap);
 		}
 		int cursorcount = cursor.getCount();
-		SimpleAdapter adapter = new SimpleAdapter(HealthReport.this, lists,
-				R.layout.search_show_list, new String[] { "id", "systemtime",
-						"action" }, new int[] { R.id.query_id,
-						R.id.query_time, R.id.query_action });
+		SimpleAdapter adapter = new SimpleAdapter(HealthReport.this, lists, R.layout.search_show_list,
+				new String[] { "id", "systemtime", "action" },
+				new int[] { R.id.query_id, R.id.query_time, R.id.query_action });
 		ListView listview1 = (ListView) findViewById(R.id.healthreport_list);
 		listview1.setAdapter(adapter);
 		cursor.close();
 		db.close();
 		listview1.setOnItemClickListener(new ListItemlistener());
-		
-		//rows of the table; 0: none; >0, show health report
+
+		// rows of the table; 0: none; >0, show health report
 		if (cursorcount > 0) {
 			healthreportlist_title.setText("health report");
 		} else {
@@ -353,42 +316,28 @@ public class HealthReport extends TabActivity {
 	// ItemListener
 	class ListItemlistener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			// TODO Auto-generated method stub
 			String id_click = (String) lists.get(arg2).get("id");
-			DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this,"mhms_db");
-			SQLiteDatabase db= dbHelper.getReadableDatabase();
-			Cursor cursor = db
-					.query("healthreport",
-							new String[] { "id,systemtime,bodyheight,bodyweight,eyesight,heartrate,"
-									+ "bloodpressure,bloodsugar,bloodlipid,surgery,internal,bloodroutine" },
-							"id=?", new String[] { id_click }, null, null,
-							null, null);
+			DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this, "mhms_db");
+			SQLiteDatabase db = dbHelper.getReadableDatabase();
+			Cursor cursor = db.query("healthreport",
+					new String[] { "id,systemtime,bodyheight,bodyweight,eyesight,heartrate,"
+							+ "bloodpressure,bloodsugar,bloodlipid,surgery,internal,bloodroutine" },
+					"id=?", new String[] { id_click }, null, null, null, null);
 			cursor.moveToNext();
-			String systemtime_send = cursor.getString(cursor
-					.getColumnIndex("systemtime"));
+			String systemtime_send = cursor.getString(cursor.getColumnIndex("systemtime"));
 			System.out.println(systemtime_send);
-			String bodyheight_send = cursor.getString(cursor
-					.getColumnIndex("bodyheight"));
-			String bodyweight_send = cursor.getString(cursor
-					.getColumnIndex("bodyweight"));
-			String eyesight_send = cursor.getString(cursor
-					.getColumnIndex("eyesight"));
-			String heartrate_send = cursor.getString(cursor
-					.getColumnIndex("heartrate"));
-			String bloodpressure_send = cursor.getString(cursor
-					.getColumnIndex("bloodpressure"));
-			String bloodsugar_send = cursor.getString(cursor
-					.getColumnIndex("bloodsugar"));
-			String bloodlipid_send = cursor.getString(cursor
-					.getColumnIndex("bloodlipid"));
-			String surgery_send = cursor.getString(cursor
-					.getColumnIndex("surgery"));
-			String internal_send = cursor.getString(cursor
-					.getColumnIndex("internal"));
-			String bloodroutine_send = cursor.getString(cursor
-					.getColumnIndex("bloodroutine"));
+			String bodyheight_send = cursor.getString(cursor.getColumnIndex("bodyheight"));
+			String bodyweight_send = cursor.getString(cursor.getColumnIndex("bodyweight"));
+			String eyesight_send = cursor.getString(cursor.getColumnIndex("eyesight"));
+			String heartrate_send = cursor.getString(cursor.getColumnIndex("heartrate"));
+			String bloodpressure_send = cursor.getString(cursor.getColumnIndex("bloodpressure"));
+			String bloodsugar_send = cursor.getString(cursor.getColumnIndex("bloodsugar"));
+			String bloodlipid_send = cursor.getString(cursor.getColumnIndex("bloodlipid"));
+			String surgery_send = cursor.getString(cursor.getColumnIndex("surgery"));
+			String internal_send = cursor.getString(cursor.getColumnIndex("internal"));
+			String bloodroutine_send = cursor.getString(cursor.getColumnIndex("bloodroutine"));
 			cursor.close();
 			db.close();
 			myTabhost.setCurrentTabByTag("tab4");
@@ -409,26 +358,19 @@ public class HealthReport extends TabActivity {
 
 	// insert
 	private void dbinsert() {
-		
-		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this,"mhms_db");
-		SQLiteDatabase db= dbHelper.getWritableDatabase();
+
+		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String systemtime = sTime.format(new java.util.Date());
-		//  get data from input text
-		float heightFloat = Float.parseFloat(bodyheight.getText().toString()
-				.trim());
-		float weightFloat = Float.parseFloat(bodyweight.getText().toString()
-				.trim());
-		float eyesightFloat = Float.parseFloat(eyesight.getText().toString()
-				.trim());
-		int heartrateInt = Integer.parseInt(heartrate.getText().toString()
-				.trim());
-		float bloodpressureFloat = Float.parseFloat(bloodpressure.getText()
-				.toString().trim());
-		float bloodsugarFloat = Float.parseFloat(bloodsugar.getText()
-				.toString().trim());
-		float bloodlipidFloat = Float.parseFloat(bloodlipid.getText()
-				.toString().trim());
+		// get data from input text
+		float heightFloat = Float.parseFloat(bodyheight.getText().toString().trim());
+		float weightFloat = Float.parseFloat(bodyweight.getText().toString().trim());
+		float eyesightFloat = Float.parseFloat(eyesight.getText().toString().trim());
+		int heartrateInt = Integer.parseInt(heartrate.getText().toString().trim());
+		float bloodpressureFloat = Float.parseFloat(bloodpressure.getText().toString().trim());
+		float bloodsugarFloat = Float.parseFloat(bloodsugar.getText().toString().trim());
+		float bloodlipidFloat = Float.parseFloat(bloodlipid.getText().toString().trim());
 		String surgeryStr = surgery.getText().toString().trim();
 		String internalStr = internal.getText().toString().trim();
 		String bloodroutineStr = bloodroutine.getText().toString().trim();
@@ -450,43 +392,36 @@ public class HealthReport extends TabActivity {
 		values.put("internal", internalStr);
 		values.put("bloodroutine", bloodroutineStr);
 		db.insert("healthreport", null, values);
-		
+
 		values_bmi.put("systemtime", systemtime);
 		values_bmi.put("bodyheight", heightFloat);
 		values_bmi.put("bodyweight", weightFloat);
-		values_bmi.put("bmi", weightFloat*10000/(heightFloat*heightFloat));
+		values_bmi.put("bmi", weightFloat * 10000 / (heightFloat * heightFloat));
 		db.insert("bmitable", null, values_bmi);
-		
+
 		values_eyesight.put("systemtime", systemtime);
-		values_eyesight.put("eyesight", (double)eyesightFloat);
+		values_eyesight.put("eyesight", (double) eyesightFloat);
 		db.insert("eyesighttable", null, values_eyesight);
-		
+
 		values_heartrate.put("systemtime", systemtime);
 		values_heartrate.put("heartrate", heartrateInt);
 		db.insert("heartratetable", null, values_heartrate);
-			
+
 		db.close();
 	}
 
 	// update database
 	private void dbupdate() {
-		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this,"mhms_db");
-		SQLiteDatabase db= dbHelper.getWritableDatabase();
+		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		String idStr = id_get.getText().toString();
-		float heightFloat = Float.parseFloat(bodyheight_get.getText()
-				.toString().trim());
-		float weightFloat = Float.parseFloat(bodyweight_get.getText()
-				.toString().trim());
-		float eyesightFloat = Float.parseFloat(eyesight_get.getText()
-				.toString().trim());
-		int heartrateInt = Integer.parseInt(heartrate_get.getText().toString()
-				.trim());
-		float bloodpressureFloat = Float.parseFloat(bloodpressure_get.getText()
-				.toString().trim());
-		float bloodsugarFloat = Float.parseFloat(bloodsugar_get.getText()
-				.toString().trim());
-		float bloodlipidFloat = Float.parseFloat(bloodlipid_get.getText()
-				.toString().trim());
+		float heightFloat = Float.parseFloat(bodyheight_get.getText().toString().trim());
+		float weightFloat = Float.parseFloat(bodyweight_get.getText().toString().trim());
+		float eyesightFloat = Float.parseFloat(eyesight_get.getText().toString().trim());
+		int heartrateInt = Integer.parseInt(heartrate_get.getText().toString().trim());
+		float bloodpressureFloat = Float.parseFloat(bloodpressure_get.getText().toString().trim());
+		float bloodsugarFloat = Float.parseFloat(bloodsugar_get.getText().toString().trim());
+		float bloodlipidFloat = Float.parseFloat(bloodlipid_get.getText().toString().trim());
 		String surgeryStr = surgery_get.getText().toString().trim();
 		String internalStr = internal_get.getText().toString().trim();
 		String bloodroutineStr = bloodroutine_get.getText().toString().trim();
@@ -508,8 +443,8 @@ public class HealthReport extends TabActivity {
 
 	// delete database
 	private void dbdelete() {
-		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this,"mhms_db");
-		SQLiteDatabase db= dbHelper.getWritableDatabase();
+		DatabaseHelper dbHelper = new DatabaseHelper(HealthReport.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		String idStr = id_get.getText().toString();
 		db.delete("healthreport", "id= ?", new String[] { idStr });
 		db.close();
@@ -541,13 +476,12 @@ public class HealthReport extends TabActivity {
 			menudialog.show();
 		}
 
-		return false;//true, show menu
+		return false;// true, show menu
 	}
-//back; tag:tab1, quit?;tag:others, back to tab1
-	
+	// back; tag:tab1, quit?;tag:others, back to tab1
+
 	public void onBackPressed() {
-		if (myTabhost.getCurrentTabTag() == "tab2"
-				|| myTabhost.getCurrentTabTag() == "tab3"
+		if (myTabhost.getCurrentTabTag() == "tab2" || myTabhost.getCurrentTabTag() == "tab3"
 				|| myTabhost.getCurrentTabTag() == "tab4") {
 			myTabhost.setCurrentTabByTag("tab1");
 			healthreportlist_show();

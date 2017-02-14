@@ -44,8 +44,7 @@ public class HealthTestingTools extends ActivityGroup {
 	private View dialogview;
 
 	// top button image
-	int[] bar_image_array = { R.drawable.bar_btn, R.drawable.bar_btn,
-			R.drawable.bar_btn};
+	int[] bar_image_array = { R.drawable.bar_btn, R.drawable.bar_btn, R.drawable.bar_btn };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,24 +52,22 @@ public class HealthTestingTools extends ActivityGroup {
 		setContentView(R.layout.healthtestingtools);
 
 		actionBar = (ActionBar) findViewById(R.id.actionbar);// add actionbar
-	
+
 		// add actionbar to home page
-		actionBar.setHomeAction(new IntentAction(this, backToMainIntent(this),
-				R.drawable.ic_title_home_default));
-		
+		actionBar.setHomeAction(new IntentAction(this, backToMainIntent(this), R.drawable.ic_title_home_default));
+
 		// add actionbar help dialog
-		actionBar.addAction(new DialogAction(createDialog(),
-				R.drawable.help_button));
+		actionBar.addAction(new DialogAction(createDialog(), R.drawable.help_button));
 
 		gvBar = (GridView) this.findViewById(R.id.gvBar);
 		gvBar.setNumColumns(bar_image_array.length);// set columns
-		gvBar.setSelector(new ColorDrawable(Color.TRANSPARENT));// transparent color when chosen
+		gvBar.setSelector(new ColorDrawable(Color.TRANSPARENT));// transparent
+																// color when
+																// chosen
 		gvBar.setGravity(Gravity.CENTER);// in the middle
 		gvBar.setVerticalSpacing(0);// space in vertical
-		int width = this.getWindowManager().getDefaultDisplay().getWidth()
-				/ bar_image_array.length;
-		ImgAdapter = new ImageAdapter(this, bar_image_array, width, 60,
-				R.drawable.bar_itemselector);
+		int width = this.getWindowManager().getDefaultDisplay().getWidth() / bar_image_array.length;
+		ImgAdapter = new ImageAdapter(this, bar_image_array, width, 60, R.drawable.bar_itemselector);
 		gvBar.setAdapter(ImgAdapter);// set menu Adapter
 		gvBar.setOnItemClickListener(new ItemClickEvent());// item click event
 		container = (LinearLayout) findViewById(R.id.Container);
@@ -79,8 +76,7 @@ public class HealthTestingTools extends ActivityGroup {
 	}
 
 	class ItemClickEvent implements OnItemClickListener {
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {			
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			SwitchActivity(arg2);
 		}
 	}
@@ -89,7 +85,7 @@ public class HealthTestingTools extends ActivityGroup {
 	 * open needed Activity by ID
 	 * 
 	 * @param id
-	 *           id of  GridView chosen
+	 *            id of GridView chosen
 	 */
 	public void SwitchActivity(int id) {
 		ImgAdapter.SetFocus(id); // item chosen highlight
@@ -98,7 +94,7 @@ public class HealthTestingTools extends ActivityGroup {
 		if (id == 0) {
 			ID = 0;
 			intent = new Intent(HealthTestingTools.this, BMI.class);
-			Toast.makeText(this, "BMI calculate", Toast.LENGTH_SHORT).show();			
+			Toast.makeText(this, "BMI calculate", Toast.LENGTH_SHORT).show();
 		} else if (id == 1) {
 			ID = 1;
 			intent = new Intent(HealthTestingTools.this, TestEyesight.class);
@@ -107,17 +103,15 @@ public class HealthTestingTools extends ActivityGroup {
 			ID = 2;
 			intent = new Intent(HealthTestingTools.this, TestHeartRate.class);
 			Toast.makeText(this, "heart rate testing", Toast.LENGTH_SHORT).show();
-		} 
+		}
 
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		
+
 		// Activity to View
-		Window subActivity = getLocalActivityManager().startActivity(
-				"subActivity", intent);
-		
+		Window subActivity = getLocalActivityManager().startActivity("subActivity", intent);
+
 		// add View to container
-		container.addView(subActivity.getDecorView(), LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
+		container.addView(subActivity.getDecorView(), LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 	}
 
 	// back to first page
@@ -130,14 +124,13 @@ public class HealthTestingTools extends ActivityGroup {
 	// ActionBar to get dialog
 	private Builder createDialog() {
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				HealthTestingTools.this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(HealthTestingTools.this);
 		LayoutInflater inflater = getLayoutInflater();
 		dialogview = inflater.inflate(R.layout.healthtestingtools_help_dialog, null);
 		builder.setTitle("help");
 		builder.setView(dialogview);
 		builder.setPositiveButton("submit", new OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -156,19 +149,17 @@ public class HealthTestingTools extends ActivityGroup {
 		return builder;
 	};
 
-
 	public void onBackPressed() {
 		Toast.makeText(this, "return", Toast.LENGTH_SHORT).show();
 		if (ID != 0) {
 			SwitchActivity(0);
 		} else {
-			
-			AlertDialog.Builder returnbuilder = new Builder(
-					HealthTestingTools.this);
+
+			AlertDialog.Builder returnbuilder = new Builder(HealthTestingTools.this);
 			returnbuilder.setMessage("quit?");
 			returnbuilder.setTitle("hint");
 			returnbuilder.setPositiveButton("submit", new OnClickListener() {
-			
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -176,7 +167,7 @@ public class HealthTestingTools extends ActivityGroup {
 				}
 			});
 			returnbuilder.setNegativeButton("cancel", new OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
@@ -197,7 +188,7 @@ public class HealthTestingTools extends ActivityGroup {
 	}
 
 	@Override
-	
+
 	/**
 	 * prevent MENU
 	 */

@@ -40,26 +40,21 @@ public class TestEyesight extends TabActivity {
 	private double eyesight_db;
 
 	// store images in array
-	private static int[] imgs0 = new int[] { R.drawable.up0, R.drawable.down0,
-			R.drawable.left0, R.drawable.right0, };
-	private static int[] imgs1 = new int[] { R.drawable.up1, R.drawable.down1,
-			R.drawable.left1, R.drawable.right1, };
+	private static int[] imgs0 = new int[] { R.drawable.up0, R.drawable.down0, R.drawable.left0, R.drawable.right0, };
+	private static int[] imgs1 = new int[] { R.drawable.up1, R.drawable.down1, R.drawable.left1, R.drawable.right1, };
 	private static int[] imgs2 = new int[] { R.drawable.up2, R.drawable.down2, R.drawable.left2, R.drawable.right2, };
-	private static int[] imgs3 = new int[] { R.drawable.up3, R.drawable.down3,
-			R.drawable.left3, R.drawable.right3, };
-	private static int[] imgs4 = new int[] { R.drawable.up4, R.drawable.down4,
-			R.drawable.left4, R.drawable.right4, };
-	private static int[] imgs5 = new int[] { R.drawable.up5, R.drawable.down5,
-			R.drawable.left5, R.drawable.right5, };
+	private static int[] imgs3 = new int[] { R.drawable.up3, R.drawable.down3, R.drawable.left3, R.drawable.right3, };
+	private static int[] imgs4 = new int[] { R.drawable.up4, R.drawable.down4, R.drawable.left4, R.drawable.right4, };
+	private static int[] imgs5 = new int[] { R.drawable.up5, R.drawable.down5, R.drawable.left5, R.drawable.right5, };
 
 	static Random rand = new Random();
 	static int index = rand.nextInt(4);
-	
+
 	// right times
 	static int i = 0;
 	// images already shown
 	int j;
-	
+
 	// define level, six levels, >5.2 one ignore; not that exact
 	int level;
 
@@ -75,19 +70,18 @@ public class TestEyesight extends TabActivity {
 		myTabhost = this.getTabHost();
 		myTabhost.addTab(myTabhost.newTabSpec("tab1") // make a new Tab
 				.setIndicator("about eyesight testing", null)
-			
-				// set the Title and Icon
+
+		// set the Title and Icon
 				.setContent(R.id.eyesight_start_tab));
 		// set the layout
 		myTabhost.addTab(myTabhost.newTabSpec("tab2") // make a new Tab
 				.setIndicator("eyesight testing", null)
-				 
-				 // set the Title and Icon
-				.setContent(R.id.testeyesight_tab));
-		// set the layout
 
-	
-		//five click, four for user to get the direction of the E
+		// set the Title and Icon
+				.setContent(R.id.testeyesight_tab));
+				// set the layout
+
+		// five click, four for user to get the direction of the E
 		up = (Button) findViewById(R.id.up);
 		up.setOnClickListener(new upOnClickListener());
 
@@ -99,24 +93,25 @@ public class TestEyesight extends TabActivity {
 
 		right = (Button) findViewById(R.id.right);
 		right.setOnClickListener(new rightOnClickListener());
-		
+
 		imageView = (ImageView) findViewById(R.id.imageView);
-	
-		//the fifth click, user click on the image, see not clearly, wrong 
+
+		// the fifth click, user click on the image, see not clearly, wrong
 		imageView.setOnClickListener(new imageViewOnClickListener());
 
 	}
-
 
 	class ButtonListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.startEyesight) {
-				myTabhost.setCurrentTabByTag("tab2");		
-			
+				myTabhost.setCurrentTabByTag("tab2");
+
 				// random get the first picture
 				getimageView0();
-				index=0;i=0;j=0;
+				index = 0;
+				i = 0;
+				j = 0;
 			} else if (v.getId() == R.id.backEyesight) {
 				myTabhost.setCurrentTabByTag("tab1");
 			}
@@ -127,7 +122,7 @@ public class TestEyesight extends TabActivity {
 
 		rand = new Random();
 		index = rand.nextInt(4);
-		
+
 		// imageView = (ImageView)findViewById(R.id.imageView);
 		imageView.setImageResource(imgs0[index]);
 	}
@@ -189,14 +184,15 @@ public class TestEyesight extends TabActivity {
 	private class upOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			
-			//right, add one
+
+			// right, add one
 			if (index == 0) {
 				// right times add one
 				i = i + 1;
 			}
-			
-			//images show times add one, four times then go to next level or get result
+
+			// images show times add one, four times then go to next level or
+			// get result
 			j = j + 1;
 			decidelevel();
 		}
@@ -206,8 +202,7 @@ public class TestEyesight extends TabActivity {
 	private class downOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			if (index == 1)
-			{
+			if (index == 1) {
 				i = i + 1;
 			}
 			j = j + 1;
@@ -219,8 +214,7 @@ public class TestEyesight extends TabActivity {
 	private class leftOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			if (index == 2)
-			{ // add right times one
+			if (index == 2) { // add right times one
 				i = i + 1;
 			}
 			j = j + 1;
@@ -245,14 +239,14 @@ public class TestEyesight extends TabActivity {
 		}
 	}
 
-	
-	//user cannot see clearly, click image, wrong, 
+	// user cannot see clearly, click image, wrong,
 	private class imageViewOnClickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
-			//images show times add one, four times then go to next level or get result
-			
+			// images show times add one, four times then go to next level or
+			// get result
+
 			j = j + 1;
 			decidelevel();
 		}
@@ -261,19 +255,19 @@ public class TestEyesight extends TabActivity {
 	// level0()��
 	private void level0() {
 
-	
-		//level0 all four pictures show over, right times? system decide next step
-		//right times <=2, result show
+		// level0 all four pictures show over, right times? system decide next
+		// step
+		// right times <=2, result show
 		if (j == 4 & i <= 2) {
 			level = -1;
 			getResult();
 		}
-	
-		//right times>2, next level1();
+
+		// right times>2, next level1();
 		else if (j == 4 & i > 2)
 
 		{ // level1();
-			//i to 0
+			// i to 0
 			i = 0;
 			level1();
 		} else {
@@ -285,8 +279,8 @@ public class TestEyesight extends TabActivity {
 
 	// level1();
 	private void level1() {
-		//right times>2, next level2();
-		
+		// right times>2, next level2();
+
 		if (j == 8 & i > 2)
 
 		{
@@ -294,8 +288,8 @@ public class TestEyesight extends TabActivity {
 			// level2();
 			level2();
 		}
-		//right times <=2, result show
-		
+		// right times <=2, result show
+
 		else if (j == 8 & i <= 2) {
 			level = 0;
 			getResult();
@@ -405,47 +399,45 @@ public class TestEyesight extends TabActivity {
 
 		{
 			popresult.setText("Your eyesight is about��\n3.0~3.5(0.01~0.03)");
-			eyesight_db=0.02;
+			eyesight_db = 0.02;
 		}
 
 		// level1 result
-		else if (level == 1)
-		{
+		else if (level == 1) {
 			popresult.setText("Your eyesight is about��\n3.5~3.9(0.03~0.08)");
 		}
 
 		// level2 result
 		else if (level == 2) {
 			popresult.setText("Your eyesight is about��\n3.9~4.3(0.08~0.2)");
-			eyesight_db=0.1;
+			eyesight_db = 0.1;
 		}
 
 		// level3 result
 		else if (level == 3) {
 			popresult.setText("Your eyesight is about��\n4.3~4.7(0.2~0.5)");
-			eyesight_db=0.4;
+			eyesight_db = 0.4;
 		}
 
 		// level4 result
 		else if (level == 4) {
 			popresult.setText("Your eyesight is about��\n4.7~5.0(0.5~1.0)");
-			eyesight_db=0.7;
+			eyesight_db = 0.7;
 		}
 
 		// level5 result
 		else if (level == 5) {
 			popresult.setText("Your eyesight is about��\n5.0~5.2(1.0~1.5)");
-			eyesight_db=1.2;
+			eyesight_db = 1.2;
 		}
 
 		// lower than level0 result,level=-1
-		else
-		{
+		else {
 			popresult.setText("Your eyesight is����\n lower than 3.0(0.01)");
-			eyesight_db=0.01;
+			eyesight_db = 0.01;
 		}
 
-		 popupeyesight.showAtLocation(findViewById(R.id.testeyesight_tab),Gravity.CENTER, 0, 0);
+		popupeyesight.showAtLocation(findViewById(R.id.testeyesight_tab), Gravity.CENTER, 0, 0);
 
 		// getResult() end
 	}
@@ -467,18 +459,16 @@ public class TestEyesight extends TabActivity {
 	// PopupWindow
 
 	protected void initPopupWindow() {
-	
-		//get layout
-		View popupWindow_view = getLayoutInflater().inflate(
-				R.layout.eyesightpopresult, null, false);
+
+		// get layout
+		View popupWindow_view = getLayoutInflater().inflate(R.layout.eyesightpopresult, null, false);
 
 		// PopupWindow
 		popupeyesight = new PopupWindow(popupWindow_view, 260, 160, true);
 
 		popresult = (TextView) popupWindow_view.findViewById(R.id.popresult);
 
-		popupeyesight.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.white));
+		popupeyesight.setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
 
 		popupeyesight.setFocusable(false);
 
@@ -500,20 +490,20 @@ public class TestEyesight extends TabActivity {
 
 	}
 
-	   // insert database
-		private void dbinsert(){
-			DatabaseHelper dbHelper = new DatabaseHelper(TestEyesight.this,"mhms_db");
-			SQLiteDatabase db = dbHelper.getWritableDatabase();
-			SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		        String systemtime = sTime.format(new java.util.Date());	
-			
-			// insert data
-			ContentValues values = new ContentValues();
-			values.put("systemtime", systemtime);
-			values.put("eyesight", eyesight_db);
-			db.insert("eyesighttable", null, values);
-			db.close();
-		}
+	// insert database
+	private void dbinsert() {
+		DatabaseHelper dbHelper = new DatabaseHelper(TestEyesight.this, "mhms_db");
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String systemtime = sTime.format(new java.util.Date());
+
+		// insert data
+		ContentValues values = new ContentValues();
+		values.put("systemtime", systemtime);
+		values.put("eyesight", eyesight_db);
+		db.insert("eyesighttable", null, values);
+		db.close();
+	}
 	// all end
 
 	/**
@@ -544,7 +534,6 @@ public class TestEyesight extends TabActivity {
 
 		return false;
 	}
-	
 
 	public void onBackPressed() {
 		if (myTabhost.getCurrentTabTag() == "tab2") {

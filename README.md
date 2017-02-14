@@ -1,11 +1,4 @@
-mhms
-====
-
-The final app is here: 
-http://kc.cc/YaHX
-
 android software development
-
 
 ==
 mobile health management system;
@@ -21,10 +14,6 @@ sqlite;
 xml;
 
 ==
-in this project, we did a great job for our college, we got reward/prize for this project;
-
 requirement analyze;software design;developing;testing;documentation;product release;
 
-we participate in every part;
 
-I am very proud for myself and my team mates for this project;

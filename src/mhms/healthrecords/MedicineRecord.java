@@ -39,11 +39,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MedicineRecord extends TabActivity {
-	
+
 	private TextView medicinelist_title;
 	private TextView medicine_systemtime_get;
 	private TextView medicine_id_get;
-	
+
 	private EditText medicine_illname;
 	private EditText medicine_illbegin;
 	private EditText medicine_illend;
@@ -73,19 +73,20 @@ public class MedicineRecord extends TabActivity {
 
 	public static TabHost myTabhost;
 	protected int myMenuSettingTag = 0;
-    
-	private int mYear,mMonth,mDay;
-	private int datepickerid=0;
+
+	private int mYear, mMonth, mDay;
+	private int datepickerid = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.medicinerecord);
-		
-		medicinelist_title = (TextView)findViewById(R.id.medicinelist_title);
-		medicine_id_get = (TextView)findViewById(R.id.medicine_id_get);
-		medicine_systemtime_get = (TextView)findViewById(R.id.medicine_systemtime_get);
-		
+
+		medicinelist_title = (TextView) findViewById(R.id.medicinelist_title);
+		medicine_id_get = (TextView) findViewById(R.id.medicine_id_get);
+		medicine_systemtime_get = (TextView) findViewById(R.id.medicine_systemtime_get);
+
 		medicine_illname = (EditText) findViewById(R.id.medicine_illname);
 		medicine_illbegin = (EditText) findViewById(R.id.medicine_illbegin);
 		medicine_illend = (EditText) findViewById(R.id.medicine_illend);
@@ -97,11 +98,13 @@ public class MedicineRecord extends TabActivity {
 		medicine_illend_get = (EditText) findViewById(R.id.medicine_illend_get);
 		medicine_pillusing_get = (EditText) findViewById(R.id.medicine_pillusing_get);
 		medicine_illdescribe_get = (EditText) findViewById(R.id.medicine_illdescribe_get);
-        
-		medicine_illname.setHint("put disease name");medicine_illbegin.setHint("put disease begin date");
-		medicine_illend.setHint("put disease end date");medicine_pillusing.setHint("put medicine record");
-		medicine_illdescribe.setHint("describe disease");		
-		
+
+		medicine_illname.setHint("put disease name");
+		medicine_illbegin.setHint("put disease begin date");
+		medicine_illend.setHint("put disease end date");
+		medicine_pillusing.setHint("put medicine record");
+		medicine_illdescribe.setHint("describe disease");
+
 		medicine_toaddbtn = (Button) findViewById(R.id.medicine_toaddbtn);
 		medicine_addbtn = (Button) findViewById(R.id.medicine_addbtn);
 		medicine_clearbtn = (Button) findViewById(R.id.medicine_clearbtn);
@@ -111,12 +114,12 @@ public class MedicineRecord extends TabActivity {
 		medicine_deletebtn = (Button) findViewById(R.id.medicine_deletebtn);
 		medicine_returnlist2 = (Button) findViewById(R.id.medicine_returnlist2);
 		medicine_returnadd = (Button) findViewById(R.id.medicine_returnadd);
-		
-		illbegin_selectbtn= (Button) findViewById(R.id.illbegin_selectbtn);
-		illend_selectbtn=(Button) findViewById(R.id.illend_selectbtn);
-		illbegin_get_selectbtn=(Button) findViewById(R.id.illbegin_get_selectbtn);
-		illend_get_selectbtn=(Button) findViewById(R.id.illend_get_selectbtn);
-		
+
+		illbegin_selectbtn = (Button) findViewById(R.id.illbegin_selectbtn);
+		illend_selectbtn = (Button) findViewById(R.id.illend_selectbtn);
+		illbegin_get_selectbtn = (Button) findViewById(R.id.illbegin_get_selectbtn);
+		illend_get_selectbtn = (Button) findViewById(R.id.illend_get_selectbtn);
+
 		medicine_toaddbtn.setOnClickListener(new ButtonListener());
 		medicine_addbtn.setOnClickListener(new ButtonListener());
 		medicine_clearbtn.setOnClickListener(new ButtonListener());
@@ -158,39 +161,33 @@ public class MedicineRecord extends TabActivity {
 		// set the layout
 		medicinelist_show();
 	}
-	
 
-	//ButtonListener
+	// ButtonListener
 	class ButtonListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.medicine_toaddbtn) {
 				myTabhost.setCurrentTabByTag("tab2");
 			} else if (v.getId() == R.id.medicine_addbtn) {
-					dbinsert();
-					MhmsLog.mhmslog(MedicineRecord.this, MhmsLog.MedicineRecord_CREATE, "added a medicine record");				
-						AlertDialog.Builder returnbuilder = new Builder(
-						MedicineRecord.this);
+				dbinsert();
+				MhmsLog.mhmslog(MedicineRecord.this, MhmsLog.MedicineRecord_CREATE, "added a medicine record");
+				AlertDialog.Builder returnbuilder = new Builder(MedicineRecord.this);
 				returnbuilder.setMessage("save successfully");
 				returnbuilder.setTitle("hint");
-				returnbuilder.setPositiveButton("submit",
-						new android.content.DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								myTabhost.setCurrentTabByTag("tab1");
-								medicinelist_show();
-								dialog.dismiss();
-							}
-						});
-				returnbuilder.setNegativeButton("cancel",
-						new android.content.DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.dismiss();
-							}
-						});
+				returnbuilder.setPositiveButton("submit", new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						myTabhost.setCurrentTabByTag("tab1");
+						medicinelist_show();
+						dialog.dismiss();
+					}
+				});
+				returnbuilder.setNegativeButton("cancel", new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
 				returnbuilder.create().show();
 			} else if (v.getId() == R.id.medicine_clearbtn) {
 				medicine_illname.setText(null);
@@ -205,29 +202,24 @@ public class MedicineRecord extends TabActivity {
 			} else if (v.getId() == R.id.medicine_barcodebtn) {
 				myTabhost.setCurrentTabByTag("tab3");
 			} else if (v.getId() == R.id.medicine_updatebtn) {
-                dbupdate();
-                AlertDialog.Builder returnbuilder = new Builder(
-						MedicineRecord.this);
+				dbupdate();
+				AlertDialog.Builder returnbuilder = new Builder(MedicineRecord.this);
 				returnbuilder.setMessage("modify successfully");
 				returnbuilder.setTitle("hint");
-				returnbuilder.setPositiveButton("submit",
-						new android.content.DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								myTabhost.setCurrentTabByTag("tab1");
-								medicinelist_show();
-								dialog.dismiss();
-							}
-						});
-				returnbuilder.setNegativeButton("cancel",
-						new android.content.DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dialog.dismiss();
-							}
-						});
+				returnbuilder.setPositiveButton("submit", new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						myTabhost.setCurrentTabByTag("tab1");
+						medicinelist_show();
+						dialog.dismiss();
+					}
+				});
+				returnbuilder.setNegativeButton("cancel", new android.content.DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
 				returnbuilder.create().show();
 			} else if (v.getId() == R.id.medicine_deletebtn) {
 				dbdelete();
@@ -237,107 +229,110 @@ public class MedicineRecord extends TabActivity {
 				medicinelist_show();
 			} else if (v.getId() == R.id.medicine_returnadd) {
 				myTabhost.setCurrentTabByTag("tab2");
-			}
-			else if (v.getId() == R.id.illbegin_selectbtn) {
-				  datepickerid=1;
-				  datepicker();
-			}
-			else if (v.getId() == R.id.illend_selectbtn) {
-				datepickerid=2;
+			} else if (v.getId() == R.id.illbegin_selectbtn) {
+				datepickerid = 1;
 				datepicker();
-			}
-			else if (v.getId() == R.id.illbegin_get_selectbtn) {
-				datepickerid=3;
+			} else if (v.getId() == R.id.illend_selectbtn) {
+				datepickerid = 2;
 				datepicker();
-			}
-			else if (v.getId() == R.id.illend_get_selectbtn) {
-				datepickerid=4;
+			} else if (v.getId() == R.id.illbegin_get_selectbtn) {
+				datepickerid = 3;
+				datepicker();
+			} else if (v.getId() == R.id.illend_get_selectbtn) {
+				datepickerid = 4;
 				datepicker();
 			}
 		}
 
 	}
-	//choose date
-	   private void datepicker(){
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);  
-        mMonth = c.get(Calendar.MONTH);  
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        showDialog(0);
-        setDateTime();
-        }
-    	private void setDateTime(){
-           final Calendar c = Calendar.getInstance();             
-           mYear = c.get(Calendar.YEAR);  
-           mMonth = c.get(Calendar.MONTH);  
-           mDay = c.get(Calendar.DAY_OF_MONTH);      
-           updateDateDisplay(datepickerid); 
-    	}
-    	private void updateDateDisplay(int id){
-    		switch(id){
-    	case 1:
-    		medicine_illbegin.setText(new StringBuilder().append(mYear).append("-")
-    	    		   .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
-    	               .append((mDay < 10) ? "0" + mDay : mDay));
-    		break;
-    	case 2:
-    		medicine_illend.setText(new StringBuilder().append(mYear).append("-")
- 	    		   .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
- 	               .append((mDay < 10) ? "0" + mDay : mDay));
-    		break;
-    	case 3:
-    		medicine_illbegin_get.setText(new StringBuilder().append(mYear).append("-")
- 	    		   .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
- 	               .append((mDay < 10) ? "0" + mDay : mDay));
-    		break;
-    	case 4:
-    		medicine_illend_get.setText(new StringBuilder().append(mYear).append("-")
- 	    		   .append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
- 	               .append((mDay < 10) ? "0" + mDay : mDay));
-    		break;
-    		}   		
-    		}
-    	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {  
-    	       public void onDateSet(DatePicker view, int year, int monthOfYear,  
-    	              int dayOfMonth) {  
-    	           mYear = year;  
-    	           mMonth = monthOfYear;  
-    	           mDay = dayOfMonth;  
-    	           updateDateDisplay(datepickerid);
-    	       }  
-    	    };
-    	    @Override  
-    	    protected Dialog onCreateDialog(int id) {  
-    	    	switch(id) {
-    	    	case 0:
-    	    		return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
-    	    		}
-				return null;} 	  
-    	    @Override  
-    	    protected void onPrepareDialog(int id, Dialog dialog){  
-               switch(id){case 0:
-    	           ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);}}
+
+	// choose date
+	private void datepicker() {
+		final Calendar c = Calendar.getInstance();
+		mYear = c.get(Calendar.YEAR);
+		mMonth = c.get(Calendar.MONTH);
+		mDay = c.get(Calendar.DAY_OF_MONTH);
+		showDialog(0);
+		setDateTime();
+	}
+
+	private void setDateTime() {
+		final Calendar c = Calendar.getInstance();
+		mYear = c.get(Calendar.YEAR);
+		mMonth = c.get(Calendar.MONTH);
+		mDay = c.get(Calendar.DAY_OF_MONTH);
+		updateDateDisplay(datepickerid);
+	}
+
+	private void updateDateDisplay(int id) {
+		switch (id) {
+		case 1:
+			medicine_illbegin.setText(new StringBuilder().append(mYear).append("-")
+					.append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
+					.append((mDay < 10) ? "0" + mDay : mDay));
+			break;
+		case 2:
+			medicine_illend.setText(new StringBuilder().append(mYear).append("-")
+					.append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
+					.append((mDay < 10) ? "0" + mDay : mDay));
+			break;
+		case 3:
+			medicine_illbegin_get.setText(new StringBuilder().append(mYear).append("-")
+					.append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
+					.append((mDay < 10) ? "0" + mDay : mDay));
+			break;
+		case 4:
+			medicine_illend_get.setText(new StringBuilder().append(mYear).append("-")
+					.append((mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-")
+					.append((mDay < 10) ? "0" + mDay : mDay));
+			break;
+		}
+	}
+
+	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			mYear = year;
+			mMonth = monthOfYear;
+			mDay = dayOfMonth;
+			updateDateDisplay(datepickerid);
+		}
+	};
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case 0:
+			return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
+		}
+		return null;
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		switch (id) {
+		case 0:
+			((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
+		}
+	}
+
 	// show query result
-	private void medicinelist_show(){
+	private void medicinelist_show() {
 		lists = new ArrayList<HashMap<String, Object>>();
-		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this,"mhms_db");
+		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this, "mhms_db");
 		SQLiteDatabase db = dbHelper.getReadableDatabase();
-		Cursor cursor = db.query("medicinerecord",
-				new String[] { "id,systemtime" }, null, null, null, null, null,
+		Cursor cursor = db.query("medicinerecord", new String[] { "id,systemtime" }, null, null, null, null, null,
 				null);
 		while (cursor.moveToNext()) {
 			HashMap<String, Object> listmap = new HashMap<String, Object>();
 			listmap.put("id", cursor.getString(cursor.getColumnIndex("id")));
-			listmap.put("systemtime",
-					cursor.getString(cursor.getColumnIndex("systemtime")));
+			listmap.put("systemtime", cursor.getString(cursor.getColumnIndex("systemtime")));
 			listmap.put("action", "view");
 			lists.add(listmap);
 		}
 		int cursorcount = cursor.getCount();
-		SimpleAdapter adapter = new SimpleAdapter(MedicineRecord.this, lists,
-				R.layout.search_show_list, new String[] { "id", "systemtime",
-						"action" }, new int[] { R.id.query_id,
-						R.id.query_time, R.id.query_action });
+		SimpleAdapter adapter = new SimpleAdapter(MedicineRecord.this, lists, R.layout.search_show_list,
+				new String[] { "id", "systemtime", "action" },
+				new int[] { R.id.query_id, R.id.query_time, R.id.query_action });
 		ListView listview1 = (ListView) findViewById(R.id.medicine_list);
 		listview1.setAdapter(adapter);
 		cursor.close();
@@ -350,19 +345,18 @@ public class MedicineRecord extends TabActivity {
 			medicinelist_title.setText("no medicine record");
 		}
 	}
+
 	// Listener on every item in the list
 	class ListItemlistener implements OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			// TODO Auto-generated method stub
 			String id_click = (String) lists.get(arg2).get("id");
-			DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this,"mhms_db");
+			DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this, "mhms_db");
 			SQLiteDatabase db = dbHelper.getReadableDatabase();
-			Cursor cursor = db
-					.query("medicinerecord",
-							new String[] { "id,systemtime,ill_name,ill_begin,ill_end,pill_using,ill_describe"},
-							"id=?", new String[] { id_click }, null, null,null, null);
+			Cursor cursor = db.query("medicinerecord",
+					new String[] { "id,systemtime,ill_name,ill_begin,ill_end,pill_using,ill_describe" }, "id=?",
+					new String[] { id_click }, null, null, null, null);
 			cursor.moveToNext();
 			String systemtime_send = cursor.getString(cursor.getColumnIndex("systemtime"));
 			String illname_send = cursor.getString(cursor.getColumnIndex("ill_name"));
@@ -382,20 +376,20 @@ public class MedicineRecord extends TabActivity {
 			medicine_illdescribe_get.setText(illdescribe_send);
 		}
 	}
-	
-    //insert into database
-	private void dbinsert(){
-		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this,"mhms_db");
+
+	// insert into database
+	private void dbinsert() {
+		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this, "mhms_db");
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		SimpleDateFormat sTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-	    String systemtime = sTime.format(new java.util.Date());	
-	
+		String systemtime = sTime.format(new java.util.Date());
+
 		String illname = medicine_illname.getText().toString().trim();
 		String illbegin = medicine_illbegin.getText().toString().trim();
 		String illend = medicine_illend.getText().toString().trim();
 		String pillusing = medicine_pillusing.getText().toString().trim();
 		String illdescribe = medicine_illdescribe.getText().toString().trim();
-		//  insert data to database
+		// insert data to database
 		ContentValues values = new ContentValues();
 		values.put("systemtime", systemtime);
 		values.put("ill_name", illname);
@@ -406,9 +400,10 @@ public class MedicineRecord extends TabActivity {
 		db.insert("medicinerecord", null, values);
 		db.close();
 	}
- //update database
-	private void dbupdate(){
-		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this,"mhms_db");
+
+	// update database
+	private void dbupdate() {
+		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this, "mhms_db");
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		String idStr = medicine_id_get.getText().toString();
 		String illname = medicine_illname_get.getText().toString().trim();
@@ -425,13 +420,13 @@ public class MedicineRecord extends TabActivity {
 		db.update("medicinerecord", values, "id=?", new String[] { idStr });
 		db.close();
 	}
-	
- //delete data
-	private void dbdelete(){
-		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this,"mhms_db");
+
+	// delete data
+	private void dbdelete() {
+		DatabaseHelper dbHelper = new DatabaseHelper(MedicineRecord.this, "mhms_db");
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		String idStr = medicine_id_get.getText().toString();
-		db.delete("medicinerecord", "id= ?", new String[]{idStr});
+		db.delete("medicinerecord", "id= ?", new String[] { idStr });
 		db.close();
 	}
 
@@ -451,8 +446,10 @@ public class MedicineRecord extends TabActivity {
 	public boolean onMenuOpened(int featureId, Menu menu) {
 		AlertDialog menudialog;// menu dialog
 		View menuview;// view of the menu
-		MenuAction addmenu = new MenuAction(MedicineRecord.this);// create the object of menu
-		addmenu.menucreate();//  get create method of menu
+		MenuAction addmenu = new MenuAction(MedicineRecord.this);// create the
+																	// object of
+																	// menu
+		addmenu.menucreate();// get create method of menu
 		menudialog = addmenu.menuDialog;// get menu dialog
 		menuview = addmenu.menuView;// show the view of menu
 		if (menudialog == null) {
@@ -461,13 +458,12 @@ public class MedicineRecord extends TabActivity {
 			menudialog.show();
 		}
 
-		return false;//return true, show the menu
+		return false;// return true, show the menu
 	}
 
-	//get back button;tab1:quit?; others: back to tab1
+	// get back button;tab1:quit?; others: back to tab1
 	public void onBackPressed() {
-		if (myTabhost.getCurrentTabTag() == "tab2"
-				|| myTabhost.getCurrentTabTag() == "tab3"
+		if (myTabhost.getCurrentTabTag() == "tab2" || myTabhost.getCurrentTabTag() == "tab3"
 				|| myTabhost.getCurrentTabTag() == "tab4") {
 			myTabhost.setCurrentTabByTag("tab1");
 			medicinelist_show();
